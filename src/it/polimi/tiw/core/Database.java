@@ -13,6 +13,8 @@ import javax.servlet.http.*;
 
 import org.json.simple.*;
 
+import it.polimi.tiw.debugger.Debugger;
+
 
 public class Database
 {
@@ -33,7 +35,7 @@ public class Database
 			Class.forName(driver);
 			
 			connection = DriverManager.getConnection(url, dbuser, dbpass);
-			System.out.println("Connessione effettuata correttamente");
+			Debugger.log("Connessione effettuata correttamente");
 		}
 		catch (ClassNotFoundException e)
 		{
@@ -66,27 +68,8 @@ public class Database
 		}
 		catch(SQLException e)
 		{
-			System.out.println("Errore SQL");
+			Debugger.log("Errore SQL");
 		} 
-		/*finally
-		{
-			try {
-				res.close();
-			}
-			catch (Exception e1)
-			{
-				System.out.println("Errore nella chiusura del resultset");
-			}
-			
-			try {
-				stm.close();
-			}
-			catch (Exception e1)
-			{
-				System.out.println("Errore nella chiusura dello statement");
-			}
-
-		}*/
 		
 		return null;
 		
@@ -154,7 +137,7 @@ public class Database
 			}
 		} catch (SQLException e)
 		{
-			System.out.println("Errore nella chiusura della connessione");
+			Debugger.log("Errore nella chiusura della connessione");
 		}
 	}
 
