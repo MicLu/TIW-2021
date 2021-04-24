@@ -2,6 +2,7 @@ package it.polimi.tiw;
 
 import java.io.IOException;
 import org.thymeleaf.*;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -46,10 +47,17 @@ public class LoginTest extends HttpServlet {
 		
 		response.setContentType("text/html");
 		
+
+    	String path = "/Templates/index.html";
+    	ServletContext contect = getServletContext();
+    	
+    	final WebContext ctx = new WebContext(request, response, contect, request.getLocale());
+    	tempEngine.process(path, ctx, response.getWriter());
+		
 		PrintWriter out = response.getWriter();
 		
 		
-		
+		/*
 		out.println("<html>");
 		out.println("<form action = 'Login' method = 'GET'>");
 		out.println("<p>Username");
@@ -59,6 +67,7 @@ public class LoginTest extends HttpServlet {
 		out.println("<input type = 'submit' value = 'login'>");
 		out.println("</form>");
 		out.println("</html>");
+		*/
 	}
 
 

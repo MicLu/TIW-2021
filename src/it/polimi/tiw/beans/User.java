@@ -1,4 +1,4 @@
-package it.polimi.tiw.model;
+package it.polimi.tiw.beans;
 
 public class User {
 
