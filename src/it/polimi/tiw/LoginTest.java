@@ -1,6 +1,10 @@
 package it.polimi.tiw;
 
 import java.io.IOException;
+import org.thymeleaf.*;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+
 import java.io.PrintWriter;
 
 import javax.servlet.ServletContext;
@@ -16,6 +20,9 @@ import it.polimi.tiw.core.Database;
 @WebServlet("/")
 public class LoginTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private TemplateEngine tempEngine;
+	
+	private Database db;
 	
 	public LoginTest() {
         super();
@@ -24,7 +31,14 @@ public class LoginTest extends HttpServlet {
     
     public void init() throws ServletException
     {
+    	ServletContext context = getServletContext();
+    	ServletContextTemplateResolver tempResolver = new ServletContextTemplateResolver(context);
+    	tempResolver.setTemplateMode(TemplateMode.HTML);
+    	this.tempEngine = new TemplateEngine();
+    	this.tempEngine.setTemplateResolver(tempResolver);
+    	tempResolver.setSuffix(".html");
     	
+    	db = new Database(context);
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,7 +48,7 @@ public class LoginTest extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		
-		ServletContext context = getServletContext();
+		
 		
 		out.println("<html>");
 		out.println("<form action = 'Login' method = 'GET'>");

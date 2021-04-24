@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import it.polimi.tiw.core.Database;
 import it.polimi.tiw.debugger.Debugger;
 
+import org.thymeleaf.*;
+
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	
