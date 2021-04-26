@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>Login</title>
-</head>
-<body>
-	<h1>Ciao mondo delle aste</h1>
-	
-	<form action = 'Login' method = 'POST'>
-		<p>Username
-		<input type = 'text' name = 'username' required>
-		<p>Password
-		<input type = 'password' name = 'password' required>
-		<input type = 'submit' value = 'login'>
-		<p th:text=" ${errorMsg}"></p>
-	</form>
-</body>
+    <head>
+        <meta charset="ISO-8859-1">
+        <link rel = "stylesheet" type = "text/css"  media="all" href="css/style.css" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <center>
+            <div>
+                <h1>Ciao</h1>
+                <h5>Accedi al tuo account</h5>
+                <p th:text=" ${errorMsg}"></p>
+                <form id = "login" action = "Login" method = "POST">
+                    <input class = "loginfield" type = "text" name = "username" placeholder="username">
+                    <input class = "loginfield" type = "password" name = "password" placeholder="password">
+                    <input style = "cursor:pointer" type="submit" value = "Accedi">
+                </form>
+                
+            </div>
+        </center>
+    </body>
 </html>

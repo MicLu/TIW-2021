@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <link rel = "stylesheet" type = "text/css" media="all" href="../css/style.css" th:href="@{/css/style.css}">
+
+        <title>AsteTIW - Bacheca</title>
+
+        <div id = "header">
+            <div id = "navbar">
+                <div>Ciao <span th:text=" ${HelloName}"></span></div>
+                <div></div>
+                <div>
+                    <ul>
+                        <li><a th:href="@{/Logout}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id = "main-header">
+                <div id = "site-logo">
+                    <center><img class = "sitelogo" src="images/logo.jpg"></center>
+                </div>
+                <div id = "searchbar">
+                    <form action="search-item" method="GET">
+                        <input class = "searchbar" style = "width: 80%;" type="text" name = "search-box">
+                        <input class = "searchbtn" type="submit" value = "Cerca">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </head>
+    <body>
+        <div id = "page-container">
+            
+            <div id = "sidebar-left">
+                <a href = "#" style = "text-decoration: none;">
+                    <div class = "big-link-btn">Vendo</div>
+                </a>
+            </div>
+            <div id = "inner-container">
+                <div id = "page-title">
+                    <h1>Aste disponibili</h1>
+                </div>
+                <table class = "auction-list">
+                    <tr>
+                       <td class = "auc-list-image">
+                           <!-- Image -->
+                           <img class = "auction-img" src="images/placeholder.jpg">
+                       </td>
+                       <td>
+                           <div class = "auc-title"><a class = "detail-link" href = "#">Articolo</a></div>
+                           <div class = "auc-owner">Venditore</div>
+                           <div class = "pricebox">
+                                <div class = "auc-price">00,00&euro;</div>
+                                <div class = "auc-timer">1d 2h rimanenti</div>
+                           </div>
+                       </td>
+                    </tr>
+
+
+                    
+
+                    
+                </table>
+            </div>
+            <div id = "sidebar-right"></div>
+        </div>
+    </body>
+</html>

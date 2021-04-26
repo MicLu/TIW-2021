@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+*
+{
+    font-family: 'Montserrat', sans-serif;
+}
+
+body
+{
+    padding: 0;
+    margin: 0;
+}
+
+#login input
+{
+    font-size: 24px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.loginfield
+{
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.loginfield:focus
+{
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+#page-container
+{
+    display: grid;
+    grid-template-columns: 300px auto 250px;
+}
+
+.pricebox
+{
+    display: grid;
+    grid-template-columns: 50% auto;
+}
+
+.auction-img
+{
+    width: 200px;
+    height: auto;
+    margin: 20px;
+}
+
+.auction-list
+{
+    width: 100%;
+}
+
+.auction-list td
+{
+    
+}
+
+.auc-list-image
+{
+    width: 220px;
+    height: auto;
+}
+
+.auction-box
+{
+    border-bottom: 1px solid black;
+}
+
+.auc-title
+{
+    position: relative;
+    top: -30px;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.auc-owner
+{
+    position: relative;
+    top: -30px;
+    font-size: 14px;
+}
+
+.auc-price
+{
+    font-size: 30px;
+    font-weight: bold;
+    position: relative;
+    top: -15px;
+}
+
+.auc-timer
+{
+    font-size: 22px;
+    position: relative;
+    top: -5px;
+}
+
+.detail-link
+{
+    text-decoration: none;
+}
+
+.detail-link:hover
+{
+    text-decoration: underline;
+}
+
+#navbar
+{
+    min-height: 25px;
+    border-bottom: 1px solid black;
+}
+
+#main-header
+{
+    margin-top: 25px;
+    margin-left: 25px;
+    display: grid;
+    grid-template-columns: 15% auto;
+}
+
+.searchbar
+{
+    font-size: 20px;
+    padding: 5px;
+}
+
+.searchbtn
+{
+    font-size: 18px;
+    background-color: blue;
+    color: #fff;
+    padding: 7px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.sitelogo
+{
+    position: relative;
+    top: -2px;
+    left: -30px;
+}
+
+.big-link-btn
+{
+    width: 100%;
+    background-color: green;
+    text-align: center;
+    color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 16px;
+}
+
+#sidebar-left
+{
+    padding: 15px;
+    padding-right: 25px;
+}
+
+#navbar
+{
+    display: grid;
+    grid-template-columns: 25% auto 10%;
+    font-size: 14px;
+    padding-top: 5px;
+    padding-left: 5px;
+}

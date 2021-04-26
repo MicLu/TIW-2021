@@ -54,11 +54,12 @@ private TemplateEngine templateEngine;
 				password == null || password.isEmpty() ) {
 				
 				//TODO: gestire il campo mancante
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Campi mancanti");
+				Debugger.log("Campi mancanti");
+				return;
 			}
 		} catch (Exception e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Campi mancanti");
-			Debugger.log("Campi mancanti");
-			return;
+			
 		}
 				
 		UserDAO userDAO = new UserDAO(connection);

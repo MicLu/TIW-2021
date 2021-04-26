@@ -57,7 +57,7 @@ public class GoToHome extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		
 		// Redirect to the Home page
-		String path = "/WEB-INF/Home.html";
+		String path = "/templates/home.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("HelloName", user.getUsername());
