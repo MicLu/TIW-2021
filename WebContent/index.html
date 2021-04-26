@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Test</title>
+<title>Login</title>
 </head>
 <body>
-	<h1>Ciao mondo</h1>
-	<form action = 'Login' method = 'GET'>
+	<h1>Ciao mondo delle aste</h1>
+	
+	<form action = 'Login' method = 'POST'>
 		<p>Username
-		<input type = 'text' name = 'username'>
+		<input type = 'text' name = 'username' required>
 		<p>Password
-		<input type = 'password' name = 'password'>
+		<input type = 'password' name = 'password' required>
 		<input type = 'submit' value = 'login'>
+		<p th:text=" ${errorMsg}"></p>
 	</form>
 </body>
 </html>

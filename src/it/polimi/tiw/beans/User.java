@@ -11,6 +11,11 @@ public class User {
 	
 	
 	
+	public User() {
+	}
+
+
+
 	public User(String email, String username, String nome, String cognome, String password, String indirizzo)
 	{
 		this.email = email;

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+</head>
+
+<body>
+
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
+	
+	<p>Ciao</p>
+	<p th:text=" ${HelloName}"></p>
+	
+</body>
+
+</html>
