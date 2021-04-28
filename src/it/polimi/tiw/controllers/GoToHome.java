@@ -75,8 +75,7 @@ public class GoToHome extends HttpServlet {
 		
 		//Get the list of avaiable auction for the logged user
 		try {
-			auctions = auctionDAO.getAvaibleAuction(user.getUsername());
-			//FIXME: manca query con join ad articolo 
+			auctions = auctionDAO.getAvaibleAuction(user.getUsername()); 
 		} catch (SQLException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get auctions");
 			return;

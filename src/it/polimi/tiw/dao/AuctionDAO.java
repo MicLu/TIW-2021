@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.tiw.beans.Article;
 import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.AuctionStatus;
 
@@ -24,7 +25,7 @@ public class AuctionDAO {
 		List<Auction> auctions = new ArrayList<Auction>();
 		
 		//FIXME: controllare ordinamento aste ascs/desc
-		String query = "SELECT * FROM asta WHERE proprietario = ? AND NOT(stato = CHIUSA) ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE proprietario = ? AND NOT(stato = CHIUSA) ORDER BY scadenza ASC";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, owner);
@@ -32,16 +33,25 @@ public class AuctionDAO {
 				while (result.next()) {
 					
 					Auction auction = new Auction();
+					Article article = new Article();
+					
 					auction.setIdAsta(result.getInt("idAsta"));
 					auction.setPrezzo_start(result.getFloat("prezzo_start"));
 					auction.setRialzo_min(result.getInt("rialzo_min"));
 					auction.setScadenza(result.getInt("scadenza"));
 					auction.setArticolo(result.getInt("articolo"));
 					auction.setProprietario(result.getString("proprietario"));
-
-					//TODO: controllare se setta bene i valori
-					auction.setAuctionStatus( AuctionStatus.valueOf(result.getString("stato")) );	
 					
+					//TODO: controllare se setta bene i valori
+					auction.setAuctionStatus( AuctionStatus.valueOf(result.getString("stato")) );
+					
+					article.setIdArticolo(result.getInt("articolo"));
+					article.setNome(result.getString("nome"));
+					article.setDescrizione(result.getString("descrizione"));
+					article.setImmagine(result.getString("immagine"));
+					
+					auction.setArticle(article);
+
 					auctions.add(auction);
 				}
 			}
@@ -58,7 +68,7 @@ public class AuctionDAO {
 		List<Auction> auctions = new ArrayList<Auction>();
 		
 		//FIXME: controllare ordinamento aste ascs/desc
-		String query = "SELECT * FROM asta WHERE proprietario = ? AND (stato = CHIUSA) ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE proprietario = ? AND (stato = CHIUSA) ORDER BY scadenza ASC";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, owner);
@@ -66,16 +76,25 @@ public class AuctionDAO {
 				while (result.next()) {
 					
 					Auction auction = new Auction();
+					Article article = new Article();
+					
 					auction.setIdAsta(result.getInt("idAsta"));
 					auction.setPrezzo_start(result.getFloat("prezzo_start"));
 					auction.setRialzo_min(result.getInt("rialzo_min"));
 					auction.setScadenza(result.getInt("scadenza"));
 					auction.setArticolo(result.getInt("articolo"));
 					auction.setProprietario(result.getString("proprietario"));
-
-					//TODO: controllare se setta bene i valori
-					auction.setAuctionStatus( AuctionStatus.valueOf(result.getString("stato")) );	
 					
+					//TODO: controllare se setta bene i valori
+					auction.setAuctionStatus( AuctionStatus.valueOf(result.getString("stato")) );
+					
+					article.setIdArticolo(result.getInt("articolo"));
+					article.setNome(result.getString("nome"));
+					article.setDescrizione(result.getString("descrizione"));
+					article.setImmagine(result.getString("immagine"));
+					
+					auction.setArticle(article);
+
 					auctions.add(auction);
 				}
 			}
@@ -90,7 +109,7 @@ public class AuctionDAO {
 		List<Auction> auctions = new ArrayList<Auction>();
 		
 		//FIXME: controllare ordinamento aste ascs/desc
-		String query = "SELECT * FROM asta WHERE NOT(proprietario = ?) AND (stato = APERTA) ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE NOT(proprietario = ?) AND (stato = APERTA) ORDER BY scadenza ASC";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, buyer);
@@ -98,16 +117,25 @@ public class AuctionDAO {
 				while (result.next()) {
 					
 					Auction auction = new Auction();
+					Article article = new Article();
+					
 					auction.setIdAsta(result.getInt("idAsta"));
 					auction.setPrezzo_start(result.getFloat("prezzo_start"));
 					auction.setRialzo_min(result.getInt("rialzo_min"));
 					auction.setScadenza(result.getInt("scadenza"));
 					auction.setArticolo(result.getInt("articolo"));
 					auction.setProprietario(result.getString("proprietario"));
-
-					//TODO: controllare se setta bene i valori
-					auction.setAuctionStatus( AuctionStatus.valueOf(result.getString("stato")) );	
 					
+					//TODO: controllare se setta bene i valori
+					auction.setAuctionStatus( AuctionStatus.valueOf(result.getString("stato")) );
+					
+					article.setIdArticolo(result.getInt("articolo"));
+					article.setNome(result.getString("nome"));
+					article.setDescrizione(result.getString("descrizione"));
+					article.setImmagine(result.getString("immagine"));
+					
+					auction.setArticle(article);
+
 					auctions.add(auction);
 				}
 			}
@@ -122,7 +150,8 @@ public class AuctionDAO {
 		List<Auction> auctions = new ArrayList<Auction>();
 		
 		//FIXME: controllare ordinamento aste ascs/desc
-		String query = "SELECT * FROM asta WHERE NOT(proprietario = ?) AND (stato = APERTA) AND () ORDER BY scadenza ASC";
+		//FIXME: controllare funzionamento ricerca per keyword
+		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE NOT(proprietario = ?) AND (stato = APERTA) AND (nome = '%?%' OR descrizione = '%?%') ORDER BY scadenza ASC";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, buyer);
@@ -130,16 +159,25 @@ public class AuctionDAO {
 				while (result.next()) {
 					
 					Auction auction = new Auction();
+					Article article = new Article();
+					
 					auction.setIdAsta(result.getInt("idAsta"));
 					auction.setPrezzo_start(result.getFloat("prezzo_start"));
 					auction.setRialzo_min(result.getInt("rialzo_min"));
 					auction.setScadenza(result.getInt("scadenza"));
 					auction.setArticolo(result.getInt("articolo"));
 					auction.setProprietario(result.getString("proprietario"));
-
-					//TODO: controllare se setta bene i valori
-					auction.setAuctionStatus( AuctionStatus.valueOf(result.getString("stato")) );	
 					
+					//TODO: controllare se setta bene i valori
+					auction.setAuctionStatus( AuctionStatus.valueOf(result.getString("stato")) );
+					
+					article.setIdArticolo(result.getInt("articolo"));
+					article.setNome(result.getString("nome"));
+					article.setDescrizione(result.getString("descrizione"));
+					article.setImmagine(result.getString("immagine"));
+					
+					auction.setArticle(article);
+
 					auctions.add(auction);
 				}
 			}

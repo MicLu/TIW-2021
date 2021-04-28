@@ -9,6 +9,7 @@ public class Auction {
 	private int articolo;
 	private String proprietario;
 	private AuctionStatus auctionStatus;
+	private Article article;
 	
 	public Auction() {
 	}
@@ -68,6 +69,16 @@ public class Auction {
 	public void setAuctionStatus(AuctionStatus auctionStatus) {
 		this.auctionStatus = auctionStatus;
 	}
+
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+	
+	
 	
 	
 	
