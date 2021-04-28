@@ -1,4 +1,4 @@
-package it.polimi.tiw;
+package it.polimi.tiw.controllers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -19,6 +19,7 @@ public class Logout extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public Logout() {
+    	super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
