@@ -21,6 +21,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.AuctionDAO;
+import it.polimi.tiw.debugger.Debugger;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.beans.Auction;
 
@@ -73,14 +74,16 @@ public class GoToHome extends HttpServlet {
 		AuctionDAO auctionDAO = new AuctionDAO(connection);
 		List<Auction> auctions = new ArrayList<Auction>();
 		
-		
 		//Get the list of avaiable auction for the logged user
 		try {
 			auctions = auctionDAO.getAvaibleAuction(user.getUsername()); 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get auctions");
-			return;
+//			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get auctions");
+			//TODO: gestire caso lista vuota
+			if(auctions.isEmpty()) {
+				Debugger.log("Lista aste vuota");
+			}
+//			return;
 		}
 		
 		ctx.setVariable("AvaiableAuctions", auctions);
@@ -107,4 +110,3 @@ public class GoToHome extends HttpServlet {
 	
 
 }
-
