@@ -175,3 +175,17 @@ body
     padding-top: 5px;
     padding-left: 5px;
 }
+
+.nav-menu-right
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-element
+{
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+}

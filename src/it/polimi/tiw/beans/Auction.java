@@ -77,6 +77,15 @@ public class Auction {
 	public void setArticle(Article article) {
 		this.article = article;
 	}
+
+	public String getName() {
+		return article.getNome();
+	}
+	
+	public String getImage()
+	{
+		return article.getImmagine();
+	}
 	
 	
 	

@@ -73,10 +73,12 @@ public class GoToHome extends HttpServlet {
 		AuctionDAO auctionDAO = new AuctionDAO(connection);
 		List<Auction> auctions = new ArrayList<Auction>();
 		
+		
 		//Get the list of avaiable auction for the logged user
 		try {
 			auctions = auctionDAO.getAvaibleAuction(user.getUsername()); 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get auctions");
 			return;
 		}
