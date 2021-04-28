@@ -18,8 +18,10 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.tiw.beans.Article;
+import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.ArticleDAO;
+import it.polimi.tiw.dao.AuctionDAO;
 import it.polimi.tiw.debugger.Debugger;
 
 /**
@@ -69,13 +71,17 @@ public class GetArticleDetails extends HttpServlet {
 		}
 		
 		//Chech if a auction with that id exists for that user 
-		ArticleDAO articleDAO = new ArticleDAO(connection);
-		Article article = null;
+		//ArticleDAO articleDAO = new ArticleDAO(connection);
+		AuctionDAO auctionDAO = new AuctionDAO(connection);
+		Auction auction = null;
+		//Article article = null;
 		
 		try {
-			article = articleDAO.getArticleByAuctionId(auctionId);
+			Debugger.log("Auc id: " + auctionId);
+			//article = articleDAO.getArticleByAuctionId(auctionId);
+			auction = auctionDAO.getAuctionById(auctionId);
 			
-			if (article == null) {
+			if (auction == null) {
 				response.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource not found");
 				return;
 			}
@@ -86,10 +92,10 @@ public class GetArticleDetails extends HttpServlet {
 		}
 		
 		//Redirect to the Article details page
-		String path = "";
+		String path = "/templates/dettaglio.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("article", article);
+		ctx.setVariable("article", auction);
 		templateEngine.process(path, ctx, response.getWriter());
 		
 	}

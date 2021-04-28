@@ -35,6 +35,9 @@
             <div id = "sidebar-left">
                 <a href = "#" style = "text-decoration: none;">
                     <div class = "big-link-btn">Vendo</div>
+                </a><br>
+                <a href = "#" style = "text-decoration: none;">
+                    <div class = "big-link-btn">Le mie aste</div>
                 </a>
             </div>
             <div id = "inner-container">
@@ -49,11 +52,11 @@
 	                           <img class = "auction-img" th:src="${auction.image}">
 	                       </td>
 	                       <td>
-	                           <div class = "auc-title"><a class = "detail-link" th:href="@{/Dettaglio${auction.idAsta}}"><span th:text="${auction.name}"></span></a></div>
+	                           <div class = "auc-title"><a class = "detail-link" th:href="@{/GetArticleDetails(auctionId=${auction.idAsta})}"><span th:text="${auction.name}"></span></a></div>
 	                           <div class = "auc-owner" ></div>
 	                           <div class = "pricebox">
-	                                <div class = "auc-price" th:text="${auction.prezzo_start}">00,00&euro;</div>
-	                                <div class = "auc-timer" th:text="${auction.scadenza}">1d 2h rimanenti</div>
+	                                <div class = "auc-price" >Offerta corrente: <span th:text="${auction.prezzo_start}">0,00</span>&euro;</div>
+	                                <div class = "auc-timer">Scadenza: <span th:text="${auction.scadenza}">1d 2h rimanenti</span></div>
 	                           </div>
 	                       </td>
 	                    </tr>

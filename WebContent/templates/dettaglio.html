@@ -37,20 +37,20 @@
             <div id = "inner-container">
                 <div class = "dettaglio">
                     <div>
-                        <img  class = "product-image" src="http://www.asdalcione.it/wp-content/uploads/2016/08/jk-placeholder-image-1.jpg">
+                        <img  class = "product-image" th:src="${article.image}">
                     </div>
                     <div class = "product-content">
                         <div class = "product-name">
-                            <span>Nome del prodotto</span>
+                            <span th:text="${article.name}">Nome del prodotto</span>
                             <hr class = "divider">
                         </div>
                         <div class = "product-content">
                             <div>Venduto da: <span>Nome Cognome</span></div>
-                            <div>Scadenza: <span>Scadenza</span></div>
+                            <div>Scadenza: <span th:text="${article.scadenza}">Scadenza</span></div>
                             <table>
                                 <tr>
                                     <td>Offerta corrente</td>
-                                    <td><span>0,00</span>€</td>
+                                    <td><span th:text="${article.prezzo_start}">0,00</span>&euro;</td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -58,7 +58,7 @@
                                     <form action = "OFFER">
                                     <td>
                                         <input name = "valore">
-                                        <p>Minimo: <span>0,00</span>€</p>
+                                        <p>Minimo: <span th:text="${article.rialzo_min}">0,00</span>&euro;</p>
                                     </td>
                                     <td>
                                         <input type = "submit" value = "Offri">
@@ -79,15 +79,15 @@
                 <div class = "box-offerte">
                     <div class = "offerta">
                         <div><span>Mattia Malacarne</span></div>
-                        <div style = "text-align: end;"><span>0,00</span>€</div>
+                        <div style = "text-align: end;"><span>0,00</span>&euro;</div>
                     </div>
                     <div class = "offerta">
                         <div><span>Michele Lucio</span></div>
-                        <div style = "text-align: end;"><span>0,00</span>€</div>
+                        <div style = "text-align: end;"><span>0,00</span>&euro;</div>
                     </div>
                     <div class = "offerta">
                         <div><span>Mattia Malacarne</span></div>
-                        <div style = "text-align: end;"><span>0,00</span>€</div>
+                        <div style = "text-align: end;"><span>0,00</span>&euro;</div>
                     </div>
                 </div>
             </div>

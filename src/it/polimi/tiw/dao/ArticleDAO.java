@@ -19,21 +19,24 @@ public class ArticleDAO {
 		
 		Article article = null;
 		
-		String query = "SELECT * FROM asta RIGHT JOIN articolo on articolo=idarticolo WHERE idasta = ?";
+		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE idasta = ?";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, auctionId);
 			try (ResultSet result = pstatement.executeQuery();) {
 					
-				article = new Article();
-				
-				article.setIdArticolo(result.getInt("idarticolo"));
-				article.setNome(result.getString("nome"));
-				article.setDescrizione(result.getString("descrizione"));
-				article.setImmagine(result.getString("immagine"));
+				if (result.next())
+				{
+					article = new Article();
+					
+					article.setIdArticolo(result.getInt("idarticolo"));
+					article.setNome(result.getString("nome"));
+					article.setDescrizione(result.getString("descrizione"));
+					article.setImmagine(result.getString("immagine"));
+				}
 
-			}
-		}
+			} 
+		} 
 		
 		return article;
 		

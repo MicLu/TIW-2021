@@ -74,6 +74,20 @@ public class AuctionDAO {
 		
 	}
 	
+	public Auction getAuctionById(int auctionId) throws SQLException
+	{
+		List<Auction> auctions = new ArrayList<Auction>();
+		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE NOT(proprietario = ?) AND (stato = 'APERTA') ORDER BY scadenza ASC";
+		
+		try (PreparedStatement stm = connection.prepareStatement(query))
+		{
+			stm.setInt(1, auctionId);
+			auctions = getAuctionList(stm);
+		}
+		
+		return auctions.get(0);
+	}
+	
 	public List<Auction> getAvaibleAuctionByKeyword(String buyer, String keyword) throws SQLException{
 		
 		List<Auction> auctions = new ArrayList<Auction>();
@@ -104,7 +118,7 @@ public class AuctionDAO {
 		
 			try (ResultSet result = pstatement.executeQuery();) {
 				while (result.next()) {
-					Debugger.log("Asta trovata");
+					
 					Auction auction = new Auction();
 					Article article = new Article();
 					
