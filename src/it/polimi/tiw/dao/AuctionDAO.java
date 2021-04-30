@@ -77,7 +77,7 @@ public class AuctionDAO {
 	public Auction getAuctionById(int auctionId) throws SQLException
 	{
 		List<Auction> auctions = new ArrayList<Auction>();
-		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE NOT(proprietario = ?) AND (stato = 'APERTA') ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE (idasta = ?) AND (stato = 'APERTA') ORDER BY scadenza ASC";
 		
 		try (PreparedStatement stm = connection.prepareStatement(query))
 		{
