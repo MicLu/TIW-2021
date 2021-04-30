@@ -45,7 +45,7 @@
                             <hr class = "divider">
                         </div>
                         <div class = "product-content">
-                            <div>Venduto da: <span>Nome Cognome</span></div>
+                            <div>Venduto da: <span th:text="${auctionOwner.nome + ' ' + auctionOwner.cognome}">Nome Cognome</span></div>
                             <div>Scadenza: <span th:text="${article.scadenza}">Scadenza</span></div>
                             <table>
                                 <tr>

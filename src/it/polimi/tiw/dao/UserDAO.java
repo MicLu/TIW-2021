@@ -43,6 +43,32 @@ public class UserDAO {
 		
 	}
 	
+	public User getUserByUsername(String username) throws SQLException {
+		
+		String query = "SELECT  * FROM utenti  WHERE username = ?";
+		
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setString(1, username);
+			try (ResultSet result = pstatement.executeQuery();) {
+				if (!result.isBeforeFirst()) // no results
+					return null;
+				else {
+					result.next();
+					User user = new User();
+					user.setEmail(result.getString("email"));
+					user.setUsername(result.getString("username"));
+					user.setNome(result.getString("nome"));
+					user.setCognome(result.getString("cognome"));
+					user.setPassword(result.getString("password"));
+					user.setIndirizzo(result.getString("indirizzo"));
+					
+					return user;
+				}
+			}
+		}
+		
+	}
+	
 	
 
 }

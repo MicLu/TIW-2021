@@ -19,9 +19,11 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.tiw.beans.Article;
 import it.polimi.tiw.beans.Auction;
+import it.polimi.tiw.beans.User;
 import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.ArticleDAO;
 import it.polimi.tiw.dao.AuctionDAO;
+import it.polimi.tiw.dao.UserDAO;
 import it.polimi.tiw.debugger.Debugger;
 
 /**
@@ -91,11 +93,22 @@ public class GetArticleDetails extends HttpServlet {
 			return;
 		}
 		
+		//Get info about auction's owner
+		UserDAO userDAO = new UserDAO(connection);
+		User user = null;
+		try {
+			user = userDAO.getUserByUsername(auction.getProprietario());
+		} catch (SQLException e) {
+			Debugger.log("Errore nella ricerca del proprietario dell'asta");
+			e.printStackTrace();
+		}
+		
 		//Redirect to the Article details page
 		String path = "/templates/dettaglio.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("article", auction);
+		ctx.setVariable("auctionOwner", user);
 		templateEngine.process(path, ctx, response.getWriter());
 		
 	}
