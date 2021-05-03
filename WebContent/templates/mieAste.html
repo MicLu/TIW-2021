@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <link rel = "stylesheet" type = "text/css" media="all" href="../css/style.css" th:href="@{/css/style.css}">
 
-        <title>AsteTIW - Bacheca</title>
+        <title>AsteTIW - Le mie Aste</title>
 
         <div id = "header">
             <div id = "navbar">
@@ -40,7 +40,7 @@
                 <a href = "#" style = "text-decoration: none;">
                     <div class = "big-link-btn">Vendo</div>
                 </a><br>
-                <a th:href="@{/GetMyAuction}" style = "text-decoration: none;">
+                <a href = "#" style = "text-decoration: none;">
                     <div class = "big-link-btn">Le mie aste</div>
                 </a>
             </div>
@@ -50,7 +50,7 @@
                 </div>
                 <table class = "auction-list">
 	                <tbody th:remove="all-but-first">
-	                    <tr th:each="auction : ${AvaiableAuctions}">
+	                    <tr th:each="auction : ${MyAuction}">
 	                      	<td class = "auc-list-image">
 	                           <!-- Image -->
 	                           <img class = "auction-img" th:src="${auction.image}">

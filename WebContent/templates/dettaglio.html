@@ -19,7 +19,11 @@
             </div>
             <div id = "main-header">
                 <div id = "site-logo">
-                    <center><img class = "sitelogo" src="images/logo.jpg"></center>
+                    <center>
+                    	<a th:href="@{/Home}">
+                    		<img class = "sitelogo" src="images/logo.jpg">
+                    	</a>
+                    </center>
                 </div>
                 <div id = "searchbar">
                     <form action="search-item" method="GET">
