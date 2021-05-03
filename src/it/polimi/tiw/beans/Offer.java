@@ -7,6 +7,8 @@ public class Offer {
 	private float valore;
 	private int asta;
 	
+	private String offerent;
+	
 	public Offer() {
 	}
 
@@ -40,6 +42,16 @@ public class Offer {
 
 	public void setAsta(int asta) {
 		this.asta = asta;
+	}
+	
+	public void setOfferent(String offerent)
+	{
+		this.offerent = offerent;
+	}
+	
+	public String getOfferent()
+	{
+		return offerent;
 	}
 	
 	

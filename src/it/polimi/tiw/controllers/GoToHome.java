@@ -69,7 +69,7 @@ public class GoToHome extends HttpServlet {
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
 		//Set user's name to display in the home page
-		ctx.setVariable("HelloName", user.getUsername());
+		ctx.setVariable("HelloName", user.getNome() + " " + user.getCognome());
 		
 		AuctionDAO auctionDAO = new AuctionDAO(connection);
 		List<Auction> auctions = new ArrayList<Auction>();

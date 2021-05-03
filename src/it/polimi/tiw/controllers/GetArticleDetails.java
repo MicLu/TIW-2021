@@ -3,6 +3,7 @@ package it.polimi.tiw.controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,10 +20,12 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.tiw.beans.Article;
 import it.polimi.tiw.beans.Auction;
+import it.polimi.tiw.beans.Offer;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.ArticleDAO;
 import it.polimi.tiw.dao.AuctionDAO;
+import it.polimi.tiw.dao.OfferDAO;
 import it.polimi.tiw.dao.UserDAO;
 import it.polimi.tiw.debugger.Debugger;
 
@@ -61,6 +64,8 @@ public class GetArticleDetails extends HttpServlet {
 			return;
 		}
 		
+		User loggedUser = (User) session.getAttribute("user");
+		
 		//Get auctionId
 		Integer auctionId = null;
 		
@@ -76,6 +81,11 @@ public class GetArticleDetails extends HttpServlet {
 		//ArticleDAO articleDAO = new ArticleDAO(connection);
 		AuctionDAO auctionDAO = new AuctionDAO(connection);
 		Auction auction = null;
+		
+		
+		OfferDAO offerDAO = new OfferDAO(connection);
+		List<Offer> offers = null;
+		
 		//Article article = null;
 		
 		try {
@@ -83,9 +93,13 @@ public class GetArticleDetails extends HttpServlet {
 			//article = articleDAO.getArticleByAuctionId(auctionId);
 			auction = auctionDAO.getAuctionById(auctionId);
 			
+			
 			if (auction == null) {
 				response.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource not found");
 				return;
+			} else 
+			{
+				offers = offerDAO.getOfferForItem(auction.getIdAsta());
 			}
 		} catch (SQLException e) {
 			Debugger.log("Sql exception nella ricerca dell'articolo");
@@ -109,6 +123,8 @@ public class GetArticleDetails extends HttpServlet {
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("article", auction);
 		ctx.setVariable("auctionOwner", user);
+		ctx.setVariable("offers", offers);
+		ctx.setVariable("HelloName", loggedUser.getNome() + " " + loggedUser.getCognome());
 		templateEngine.process(path, ctx, response.getWriter());
 		
 	}

@@ -76,10 +76,10 @@
             <div id = "sidebar-right-dettaglio">
                 <div>Offerte</div>
                 <hr class = "divider">
-                <div class = "box-offerte">
+                <div class = "box-offerte" th:remove="all-but-first" th:each="offer : ${offers}">
                     <div class = "offerta">
-                        <div><span>Mattia Malacarne</span></div>
-                        <div style = "text-align: end;"><span>0,00</span>&euro;</div>
+                        <div><span th:text="${offer.offerent}">Mattia Malacarne</span></div>
+                        <div style = "text-align: end;"><span th:text="${offer.valore}">0,00</span>&euro;</div>
                     </div>
                     <div class = "offerta">
                         <div><span>Michele Lucio</span></div>
