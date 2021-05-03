@@ -1,9 +1,11 @@
 package it.polimi.tiw.beans;
 
+import java.sql.Timestamp;
+
 public class Offer {
 	
 	private String offerente;
-	private int timestamp;
+	private Timestamp timestamp;
 	private float valore;
 	private int asta;
 	
@@ -20,11 +22,11 @@ public class Offer {
 		this.offerente = offerente;
 	}
 
-	public int getTimestamp() {
+	public Timestamp getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(int timestamp) {
+	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
 

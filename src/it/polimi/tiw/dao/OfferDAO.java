@@ -48,7 +48,7 @@ public class OfferDAO {
 				Debugger.log(offerent);
 				
 				offer.setOfferent(offerent);
-				offer.setTimestamp(result.getInt("time"));
+				offer.setTimestamp(result.getTimestamp("time"));
 				offer.setValore(result.getFloat("val"));
 				offer.setAsta(Integer.parseInt(result.getString("id")));
 				
@@ -65,7 +65,7 @@ public class OfferDAO {
 		PreparedStatement pstatement = connection.prepareStatement(query);
 		
 		pstatement.setString(1, offer.getOfferent());
-		pstatement.setString(2, Integer.toString(offer.getTimestamp()));
+		pstatement.setString(2, offer.getTimestamp().toString());
 		pstatement.setString(3, Float.toString(offer.getValore()));
 		pstatement.setString(4, Integer.toString(offer.getAsta()));
 		

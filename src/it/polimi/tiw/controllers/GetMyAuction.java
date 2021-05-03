@@ -20,6 +20,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.tiw.beans.Auction;
+import it.polimi.tiw.beans.AuctionStatus;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.AuctionDAO;
@@ -67,18 +68,34 @@ public class GetMyAuction extends HttpServlet {
 			AuctionDAO auctionDAO = new AuctionDAO(connection);
 			List<Auction> auctions = new ArrayList<Auction>();
 			
+			List<Auction> auctionsOpen = new ArrayList<Auction>();
+			List<Auction> auctionsClosed = new ArrayList<Auction>();
+			
 			
 			
 			//Get the list of all auction for the logged user
 			
 			try {
 				auctions = auctionDAO.getAllMyAuction(user.getUsername());
+				
+				for (Auction auction : auctions)
+				{
+					if (auction.getAuctionStatus() == AuctionStatus.CHIUSA)
+					{
+						auctionsClosed.add(auction);
+					} else
+					{
+						auctionsOpen.add(auction);
+					} 
+				}
+				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
-			ctx.setVariable("MyAuction", auctions);
+			ctx.setVariable("MyAuctionO", auctionsOpen);
+			ctx.setVariable("MyAuctionC", auctionsClosed);
 			
 			templateEngine.process(path, ctx, response.getWriter());
 

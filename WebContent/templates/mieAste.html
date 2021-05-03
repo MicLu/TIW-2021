@@ -46,11 +46,37 @@
             </div>
             <div id = "inner-container">
                 <div id = "page-title">
-                    <h1>Aste disponibili</h1>
+                    <h1>Aste aperte</h1>
                 </div>
                 <table class = "auction-list">
 	                <tbody th:remove="all-but-first">
-	                    <tr th:each="auction : ${MyAuction}">
+	                    <tr th:each="auction : ${MyAuctionO}">
+	                      	<td class = "auc-list-image">
+	                           <!-- Image -->
+	                           <img class = "auction-img" th:src="${auction.image}">
+	                       </td>
+	                       <td>
+	                           <div class = "auc-title"><a class = "detail-link" th:href="@{/GetArticleDetails(auctionId=${auction.idAsta})}"><span th:text="${auction.name}"></span></a></div>
+	                           <div class = "auc-owner" ></div>
+	                           <div class = "pricebox">
+	                                <div class = "auc-price" >Offerta corrente: <span th:text="${auction.prezzo_start}">0,00</span>&euro;</div>
+	                                <div class = "auc-timer">Scadenza: <span th:text="${auction.scadenza}">1d 2h rimanenti</span></div>
+	                           </div>
+	                       </td>
+	                    </tr>
+	
+					</tbody>
+                    
+
+                    
+                </table>
+                
+                <div id = "page-title">
+                    <h1>Aste chiuse</h1>
+                </div>
+                <table class = "auction-list">
+	                <tbody th:remove="all-but-first">
+	                    <tr th:each="auction : ${MyAuctionC}">
 	                      	<td class = "auc-list-image">
 	                           <!-- Image -->
 	                           <img class = "auction-img" th:src="${auction.image}">

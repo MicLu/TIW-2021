@@ -3,6 +3,7 @@ package it.polimi.tiw.controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -74,7 +75,7 @@ public class MakeOffer extends HttpServlet
 			
 			offer.setAsta(asta);
 			offer.setOfferent(offerente);
-			offer.setTimestamp(timestamp);
+			offer.setTimestamp(new Timestamp(System.currentTimeMillis()));
 			offer.setValore(valore);
 			
 			offerDAO.makeOffer(offer);

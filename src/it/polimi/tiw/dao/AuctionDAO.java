@@ -10,6 +10,7 @@ import java.util.List;
 import it.polimi.tiw.beans.Article;
 import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.AuctionStatus;
+import it.polimi.tiw.debugger.Debugger;
 
 public class AuctionDAO {
 	
@@ -37,7 +38,7 @@ public class AuctionDAO {
 		
 	}
 	
-	//Restituisce lista delle aste create dal proprietario, già chiuse
+	//Restituisce lista delle aste create dal proprietario, giï¿½ chiuse
 	//TODO: possibile unire questo metodo con il precedente usando un parametro che condiziona la costruzione della query
 	public List<Auction> getSellingClosedAuction(String owner) throws SQLException{
 		
@@ -76,12 +77,14 @@ public class AuctionDAO {
 	public Auction getAuctionById(int auctionId) throws SQLException
 	{
 		List<Auction> auctions = new ArrayList<Auction>();
-		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE (idasta = ?) AND (stato = 'APERTA') ORDER BY scadenza ASC";
+		Auction test = null;
+		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE (idasta = ?) ORDER BY scadenza ASC";
 		
 		try (PreparedStatement stm = connection.prepareStatement(query))
 		{
 			stm.setInt(1, auctionId);
 			auctions = getAuctionList(stm);
+			Debugger.log(Integer.toString(auctions.size()));
 		}
 		
 		return auctions.get(0);
@@ -142,7 +145,7 @@ public class AuctionDAO {
 					auction.setIdAsta(result.getInt("idAsta"));
 					auction.setPrezzo_start(result.getFloat("prezzo_start"));
 					auction.setRialzo_min(result.getInt("rialzo_min"));
-					auction.setScadenza(result.getInt("scadenza"));
+					auction.setScadenza(result.getTimestamp("scadenza"));
 					auction.setArticolo(result.getInt("articolo"));
 					auction.setProprietario(result.getString("proprietario"));
 					

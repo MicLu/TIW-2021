@@ -1,11 +1,13 @@
 package it.polimi.tiw.beans;
 
+import java.sql.Timestamp;
+
 public class Auction {
 	
 	private int idAsta;
 	private float prezzo_start;
 	private int rialzo_min;
-	private int scadenza;
+	private Timestamp scadenza;
 	private int articolo;
 	private String proprietario;
 	private AuctionStatus auctionStatus;
@@ -38,11 +40,11 @@ public class Auction {
 		this.rialzo_min = rialzo_min;
 	}
 
-	public int getScadenza() {
+	public Timestamp getScadenza() {
 		return scadenza;
 	}
 
-	public void setScadenza(int scadenza) {
+	public void setScadenza(Timestamp scadenza) {
 		this.scadenza = scadenza;
 	}
 
