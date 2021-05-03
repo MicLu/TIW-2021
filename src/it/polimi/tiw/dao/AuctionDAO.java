@@ -10,7 +10,6 @@ import java.util.List;
 import it.polimi.tiw.beans.Article;
 import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.AuctionStatus;
-import it.polimi.tiw.debugger.Debugger;
 
 public class AuctionDAO {
 	
@@ -26,7 +25,7 @@ public class AuctionDAO {
 		List<Auction> auctions = new ArrayList<Auction>();
 		
 		//FIXME: controllare ordinamento aste ascs/desc
-		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE proprietario = ? AND NOT(stato = 'CHIUSA') ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE proprietario = ? AND NOT(stato = 'CHIUSA') ORDER BY scadenza ASC";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, owner);
@@ -45,7 +44,7 @@ public class AuctionDAO {
 		List<Auction> auctions = new ArrayList<Auction>();
 		
 		//FIXME: controllare ordinamento aste ascs/desc
-		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE proprietario = ? AND (stato = 'CHIUSA') ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE proprietario = ? AND (stato = 'CHIUSA') ORDER BY scadenza ASC";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, owner);
@@ -61,7 +60,7 @@ public class AuctionDAO {
 		List<Auction> auctionList = new ArrayList<Auction>();
 		
 		//FIXME: controllare ordinamento aste ascs/desc
-		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE NOT(proprietario = ?) AND (stato = 'APERTA') ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE NOT(proprietario = ?) AND (stato = 'APERTA') ORDER BY scadenza ASC";
 		
 		try (PreparedStatement stm = connection.prepareStatement(query))
 		{
@@ -77,7 +76,7 @@ public class AuctionDAO {
 	public Auction getAuctionById(int auctionId) throws SQLException
 	{
 		List<Auction> auctions = new ArrayList<Auction>();
-		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE (idasta = ?) AND (stato = 'APERTA') ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE (idasta = ?) AND (stato = 'APERTA') ORDER BY scadenza ASC";
 		
 		try (PreparedStatement stm = connection.prepareStatement(query))
 		{
@@ -94,7 +93,7 @@ public class AuctionDAO {
 		
 		//FIXME: controllare ordinamento aste ascs/desc
 		//FIXME: controllare funzionamento ricerca per keyword
-		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE NOT(proprietario = ?) AND (stato = 'APERTA') AND (nome = '%?%' OR descrizione = '%?%') ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE NOT(proprietario = ?) AND (stato = 'APERTA') AND (nome LIKE '%?%' OR descrizione LIKE '%?%') ORDER BY scadenza ASC";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) 
 		{

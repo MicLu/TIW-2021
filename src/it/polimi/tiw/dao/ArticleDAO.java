@@ -19,7 +19,7 @@ public class ArticleDAO {
 		
 		Article article = null;
 		
-		String query = "SELECT * FROM asta JOIN articolo on articolo=idarticolo WHERE idasta = ?";
+		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE idasta = ?";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, auctionId);
