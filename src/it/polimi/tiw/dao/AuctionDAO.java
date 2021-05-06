@@ -166,6 +166,22 @@ public class AuctionDAO {
 		
 		return auctions;
 	}
+
+	public void updateAuctionPrezzoStart(float price, int id) throws SQLException {
+		
+		String query = "update asta set prezzo_start = ? where idasta = ?";
+		PreparedStatement pstatement = connection.prepareStatement(query);
+		pstatement.setString(1, Float.toString(price));
+		pstatement.setString(2, Integer.toString(id));
+		
+		int result = pstatement.executeUpdate();
+		Debugger.log("Modificate "+result+" righe");
+	}
+	
+	public void updateAuctionStatus(int id, AuctionStatus status)
+	{
+		
+	}
 	
 
 }

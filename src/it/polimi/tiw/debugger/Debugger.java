@@ -12,5 +12,14 @@ public class Debugger {
 			System.out.println("[DEBUGGER] " + msg);
 		}
 	}
+
+
+	public static void log(int msg) {
+		if (debugmode) 
+		{
+			System.out.println("[DEBUGGER] " + msg);
+		}
+		
+	}
 	
 }

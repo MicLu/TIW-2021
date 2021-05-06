@@ -124,7 +124,10 @@ public class GetArticleDetails extends HttpServlet {
 		ctx.setVariable("article", auction);
 		ctx.setVariable("auctionOwner", user);
 		ctx.setVariable("offers", offers);
+		Debugger.log(offers.size());
 		ctx.setVariable("HelloName", loggedUser.getNome() + " " + loggedUser.getCognome());
+		ctx.setVariable("logged_username", loggedUser.getUsername());
+		ctx.setVariable("auctionId", auctionId);
 		templateEngine.process(path, ctx, response.getWriter());
 		
 	}

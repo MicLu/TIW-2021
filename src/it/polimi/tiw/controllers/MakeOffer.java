@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import it.polimi.tiw.beans.Offer;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.core.DatabaseConnection;
+import it.polimi.tiw.dao.AuctionDAO;
 import it.polimi.tiw.dao.OfferDAO;
 import it.polimi.tiw.debugger.Debugger;
 
@@ -54,22 +55,37 @@ public class MakeOffer extends HttpServlet
 		User user = (User) session.getAttribute("user");
 		
 		OfferDAO offerDAO = new OfferDAO(connection);
+		AuctionDAO auctionDAO = new AuctionDAO(connection);
 		
 		String offerente = null;
 		int timestamp = 0;
 		float valore = 0;
 		int asta = 0;
+		float rialzo_min = 0;
+		float corrente = 0;
 		
 		try {
 			
 			timestamp = 500;
 			valore = Float.parseFloat(request.getParameterValues("valore")[0]);
 			asta = Integer.parseInt(request.getParameterValues("asta")[0]);
+			rialzo_min = Float.parseFloat(request.getParameterValues("min")[0]);
+			corrente = Float.parseFloat(request.getParameterValues("corrente")[0]);
+			offerente = request.getParameterValues("offerente")[0];
+			
 			
 			if (valore == 0 || asta == 0 || timestamp == 0 || offerente == null)
 			{
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Campi mancanti");
+				response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId="+asta+"&error="+1);
 				Debugger.log("Campi mancanti");
+				return;
+			}
+			
+			if (valore < rialzo_min + corrente)
+			{
+				Debugger.log("Offerta minore dell'offerta minima");
+				response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId="+asta+"&error="+2);
 				return;
 			}
 			
@@ -79,15 +95,19 @@ public class MakeOffer extends HttpServlet
 			offer.setValore(valore);
 			
 			offerDAO.makeOffer(offer);
+			auctionDAO.updateAuctionPrezzoStart(valore, asta);
+			
+			
+			response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId="+asta);
 			
 			
 		}catch (SQLException e)
 		{
-			
+			Debugger.log("SQL exception");
 		} 
 		catch (Exception e)
 		{
-			
+			e.printStackTrace();
 		} 
 		
 		
