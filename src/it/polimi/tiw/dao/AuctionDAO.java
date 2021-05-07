@@ -96,12 +96,14 @@ public class AuctionDAO {
 		List<Auction> auctions = new ArrayList<Auction>();
 		
 		//FIXME: controllare ordinamento aste ascs/desc
-		//FIXME: controllare funzionamento ricerca per keyword
-		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE NOT(proprietario = ?) AND (stato = 'APERTA') AND (nome LIKE '%?%' OR descrizione LIKE '%?%') ORDER BY scadenza ASC";
+		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE NOT(proprietario = ?) AND (stato = 'APERTA') AND (nome LIKE ? OR descrizione LIKE ?) ORDER BY scadenza ASC";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) 
 		{
 			pstatement.setString(1, buyer);
+			pstatement.setString(2, '%' + keyword + '%');
+			pstatement.setString(3, '%' + keyword + '%');
+			
 			auctions = getAuctionList(pstatement);
 		}
 		
