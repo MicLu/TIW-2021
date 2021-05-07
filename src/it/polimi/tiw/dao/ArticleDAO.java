@@ -42,6 +42,46 @@ public class ArticleDAO {
 		
 	}
 	
+	public void createArticle(String nome, String descrizione, String immagine) throws SQLException {
+		
+		String query = "INSERT INTO articolo (nome, descrizione, immagine) VALUES (?, ?, ?);";
+		
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			
+			pstatement.setString(1, nome);
+			pstatement.setString(2, descrizione);
+			pstatement.setString(3, immagine);
+			
+			pstatement.executeUpdate();
+		}
+		
+	}
 	
+	public Article getLastInsertArticle() throws SQLException {
+		
+		Article article = null;
+		
+		String query = "SELECT * FROM articolo WHERE idarticolo = ( SELECT max(idarticolo) FROM articolo )";
+		
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			
+			try (ResultSet result = pstatement.executeQuery();) {
+					
+				if (result.next())
+				{
+					article = new Article();
+					
+					article.setIdArticolo(result.getInt("idarticolo"));
+					article.setNome(result.getString("nome"));
+					article.setDescrizione(result.getString("descrizione"));
+					article.setImmagine(result.getString("immagine"));
+				}
+
+			} 
+		} 
+		
+		return article;
+		
+	}
 
 }

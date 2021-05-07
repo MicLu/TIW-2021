@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,6 +181,23 @@ public class AuctionDAO {
 	
 	public void updateAuctionStatus(int id, AuctionStatus status)
 	{
+		
+	}
+	
+	public void createAuction(float prezzo_start, int rialzo_min, Timestamp scadenza, int articolo, String proprietario) throws SQLException {
+		
+		String query = "INSERT INTO asta (prezzo_start, rialzo_min, scadenza, articolo, proprietario) VALUES (?, ?, ?, ?, ?)";
+		
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			
+			pstatement.setFloat(1, prezzo_start);
+			pstatement.setInt(2, rialzo_min);
+			pstatement.setTimestamp(3, scadenza);
+			pstatement.setInt(4, articolo);
+			pstatement.setString(5, proprietario);
+			
+			pstatement.executeUpdate();
+		}
 		
 	}
 	

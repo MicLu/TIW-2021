@@ -37,7 +37,7 @@
     <body>
         <div id = "page-container">
             
-            <form action = "" method = "POST">
+            <form action = "CreateAuction" method = "POST">
             	<table>
             		
             		<tr>
@@ -46,8 +46,8 @@
             		</tr>
             		
             		<tr>
-            			<td><input type = "text" name = "title"></td>
-            			<td><input type = "file" accept="image/png, image/jpeg" name = "img"></td>
+            			<td><input type = "text" name = "nomeArticolo"></td>
+            			<td><input type = "file" accept="image/png, image/jpeg" name = "immagineArticolo"></td>
             		</tr>
             		
             		<tr>
@@ -55,7 +55,7 @@
             		</tr>
             		
             		<tr>
-            			<td><textarea type = "text-area" name = "desc"></textarea></td>
+            			<td><textarea type = "text-area" name = "descrizioneArticolo"></textarea></td>
             		</tr>
             		
             	</table>
@@ -68,9 +68,9 @@
             		</tr>
             		
             		<tr>
-            			<td><input type = "number" name = "start"></td>
-            			<td><input type = "number" name = "min"></td>
-            			<td><input type = "datetime-local" name = "scad"></td>
+            			<td><input type = "number" name = "prezzo_startAsta"></td>
+            			<td><input type = "number" name = "rialzo_minAsta"></td>
+            			<td><input type = "datetime-local" name = "scadenzaAsta"></td>
             		</tr>
             	</table>
             	
