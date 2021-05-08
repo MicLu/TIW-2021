@@ -9,7 +9,7 @@
 
         <div id = "header">
             <div id = "navbar">
-                <div>Ciao <span th:text=" ${HelloName}"></span></div>
+                <div>Ciao <span th:text=" ${session.user.nome + ' ' + session.user.cognome}"></span></div>
                 <div></div>
                 <div>
                     <ul class = "nav-menu-right">
