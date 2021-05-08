@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.UserDAO;
-import it.polimi.tiw.debugger.Debugger;
-
 import org.thymeleaf.*;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -46,6 +44,10 @@ private TemplateEngine templateEngine;
 		String username = null;
 		String password = null;
 		
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		String path;
+		
 		try {
 			username = request.getParameterValues("username")[0];
 			password = request.getParameterValues("password")[0];
@@ -53,13 +55,13 @@ private TemplateEngine templateEngine;
 			if( username == null || username.isEmpty() ||   
 				password == null || password.isEmpty() ) {
 				
-				//TODO: gestire il campo mancante
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Campi mancanti");
-				Debugger.log("Campi mancanti");
+				path = "/index.html";
+				ctx.setVariable("errorMsg", "Campi mancanti");
+				templateEngine.process(path, ctx, response.getWriter());
 				return;
 			}
 		} catch (Exception e) {
-			
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Errore di autenticazione");
 		}
 		
 		
@@ -75,36 +77,15 @@ private TemplateEngine templateEngine;
 		
 		//Se l'utente esiste prepara il template engine e vai alla home
 		//altimenti ritorna a index mostrando un messaggio di errore
-		String path;
 		if (user == null) {
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "Incorrect username or password");
 			path = "/index.html";
+			ctx.setVariable("errorMsg", "Incorrect username or password");
 			templateEngine.process(path, ctx, response.getWriter());
 		} else {
 			request.getSession().setAttribute("user", user);
 			path = getServletContext().getContextPath() + "/Home";
 			response.sendRedirect(path);
 		}
-		
-//		Boolean logged = false;
-		
-//		try {
-//			logged = login(username, password, context);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} 
-//		
-//		if (logged)
-//		{
-//			out.println("Logged OK");
-//		} 
-//		else 
-//		{
-//			out.println("Logged NO");
-//		}
 		
 	}
 	
@@ -116,26 +97,6 @@ private TemplateEngine templateEngine;
 //			e.printStackTrace();
 //		}
 	}
-	
-//	Boolean login(String username, String password, ServletContext context) throws SQLException, ServletException
-//	{
-//		
-//		StringBuilder sql = new StringBuilder();
-//		sql.append("select email from utenti where username = '");
-//		sql.append(username);
-//		sql.append("' and password = '");
-//		sql.append(password);
-//		sql.append("';");
-//		
-//		Debugger.log(sql.toString());
-//		
-//		DatabaseConnection db = new DatabaseConnection(context);
-//		ResultSet res = db.query(sql.toString());
-//		
-//		// TODO: Ottenere i dati dell'utente e salvarli da qualche parte
-//		
-//		return res.next();
-//	}
 	
 	
 }

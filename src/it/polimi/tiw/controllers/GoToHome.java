@@ -75,12 +75,13 @@ public class GoToHome extends HttpServlet {
 		try {
 			auctions = auctionDAO.getAvaibleAuction(user.getUsername()); 
 		} catch (SQLException e) {
-//			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get auctions");
-			//TODO: gestire caso lista vuota
-			if(auctions.isEmpty()) {
-				Debugger.log("Lista aste vuota");
-			}
-//			return;
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get auctions");
+			return;
+		}
+		
+		if(auctions.isEmpty()) {
+			Debugger.log("Lista aste vuota");
+			//TODO: gestire rappresentazione lista vuota su html
 		}
 		
 		ctx.setVariable("AvaiableAuctions", auctions);

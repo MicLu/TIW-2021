@@ -69,9 +69,6 @@ public class Search extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
-		//Set user's name to display in the home page
-		ctx.setVariable("HelloName", user.getNome() + " " + user.getCognome());
-		
 		AuctionDAO auctionDAO = new AuctionDAO(connection);
 		List<Auction> auctions = new ArrayList<Auction>();
 		
@@ -79,15 +76,16 @@ public class Search extends HttpServlet {
 		try {
 			auctions = auctionDAO.getAvaibleAuctionByKeyword(user.getUsername(), request.getParameter("keywordSearch")); 
 		} catch (SQLException e) {
-//			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get auctions");
-			//TODO: gestire caso lista vuota
-			if(auctions.isEmpty()) {
-				Debugger.log("Lista aste vuota");
-			}
-//			return;
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get auctions");
+			return;
 		}
 		
 		Debugger.log("Cercata la parola: " + request.getParameter("keywordSearch"));
+		
+		if(auctions.isEmpty()) {
+			Debugger.log("Lista aste vuota");
+			ctx.setVariable("searchedKeyword", request.getParameter("keywordSearch"));
+		}
 		
 		ctx.setVariable("AvaiableAuctions", auctions);
 		
