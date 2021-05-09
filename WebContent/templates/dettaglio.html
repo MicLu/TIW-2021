@@ -62,7 +62,9 @@
                                     <form action = "MakeOffer" method = "POST">
                                     <td>
                                         <input name = "valore">
-                                        <p>Minimo: <span th:text="${article.rialzo_min}">0,00</span>&euro;</p>
+                                        
+                                       	<p>Minimo: <span th:text="${minim}">0,00</span>&euro;</p>
+                                        
                                         <input name = "asta" style = "display:none;" th:value="${auctionId}">
                                         <input name = "min" style = "display:none;" th:value="${article.rialzo_min}">
                                         <input name = "offerente" style = "display:none;" th:value="${logged_username}">

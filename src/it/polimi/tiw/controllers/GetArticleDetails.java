@@ -117,6 +117,8 @@ public class GetArticleDetails extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		
+		float minim = auction.getPrezzo_start() + auction.getRialzo_min();
 		//Redirect to the Article details page
 		String path = "/templates/dettaglio.html";
 		ServletContext servletContext = getServletContext();
@@ -128,6 +130,7 @@ public class GetArticleDetails extends HttpServlet {
 		ctx.setVariable("HelloName", loggedUser.getNome() + " " + loggedUser.getCognome());
 		ctx.setVariable("logged_username", loggedUser.getUsername());
 		ctx.setVariable("auctionId", auctionId);
+		ctx.setVariable("minim", minim);
 		templateEngine.process(path, ctx, response.getWriter());
 		
 	}
