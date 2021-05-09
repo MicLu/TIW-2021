@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.polimi.tiw.debugger.Debugger;
+
 /**
  * Servlet implementation class GetFile
  */
@@ -23,6 +25,7 @@ public class GetImage extends HttpServlet {
 	public void init() throws ServletException {
 		// get folder path from webapp init parameters inside web.xml
 		folderPath = getServletContext().getInitParameter("imgFolder");
+		Debugger.log(folderPath);
 	}
 
 	/**
@@ -44,9 +47,9 @@ public class GetImage extends HttpServlet {
 
 		// substring(1) useful to remove first "/" in path info
 		// because it is not part of the filename
-		String filename = URLDecoder.decode(pathInfo.substring(1), "UTF-8");
+		String filename = URLDecoder.decode(pathInfo.substring(0), "UTF-8");
 
-		File file = new File(folderPath, filename); //folderPath inizialized in init
+		File file = new File(folderPath+ filename); //folderPath inizialized in init
 		System.out.println(filename);
 
 		if (!file.exists() || file.isDirectory()) {
