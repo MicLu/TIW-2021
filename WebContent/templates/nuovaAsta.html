@@ -5,7 +5,7 @@
         <link rel = "stylesheet" type = "text/css" media="all" href="../css/style.css" th:href="@{/css/style.css}">
         <link rel = "stylesheet" type = "text/css" media="all" href="../css/dettaglio.css" th:href="@{/css/dettaglio.css}">
 
-        <title>AsteTIW - Bacheca</title>
+        <title>AsteTIW - Nuova asta</title>
 
         <div id = "header">
             <div id = "navbar">
@@ -35,9 +35,10 @@
         </div>
     </head>
     <body>
+    <br><br>
         <div id = "page-container">
-            
-            <form action = "CreateAuction" method = "POST">
+            <center>
+            <form action = "CreateAuction" method = "POST" enctype="multipart/form-data">
             	<table>
             		
             		<tr>
@@ -76,7 +77,7 @@
             	
             	<input type = "submit" value = "Crea Asta">
             </form>
-            
+            </center>
         </div>
     </body>
 </html>

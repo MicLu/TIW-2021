@@ -41,7 +41,7 @@
             <div id = "inner-container">
                 <div class = "dettaglio">
                     <div>
-                        <img  class = "product-image" th:src="${article.image}">
+                        <img  class = "product-image" th:src="@{/GetImage(image=${article.image})}">
                     </div>
                     <div class = "product-content">
                         <div class = "product-name">

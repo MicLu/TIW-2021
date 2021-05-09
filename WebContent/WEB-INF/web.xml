@@ -17,6 +17,10 @@
     <param-name>dbDriver</param-name>
     <param-value>com.mysql.cj.jdbc.Driver</param-value>
   </context-param>
+  <context-param>
+    <param-name>imgFolder</param-name>
+    <param-value>/Users/mattia/Documents/Università/TIW/TIWimages/</param-value>
+  </context-param>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
