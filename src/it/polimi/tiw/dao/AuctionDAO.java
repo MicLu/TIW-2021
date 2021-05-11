@@ -186,6 +186,29 @@ public class AuctionDAO {
 		
 	}
 	
+	public void updateExpiredAuctionStatus(Timestamp now)
+	{
+		String query = "update asta set stato = 'SCADUTA' where stato = 'APERTA' AND scadenza < ?";
+		
+		try {
+			
+			PreparedStatement pstatement = connection.prepareStatement(query);
+			pstatement.setTimestamp(1, now);
+			Debugger.log(pstatement.toString());
+			int res = pstatement.executeUpdate();
+			Debugger.log("Trovate "+res+" aste scadute");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NullPointerException e)
+		{
+			Debugger.log("Null pointer qui");
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void createAuction(float prezzo_start, int rialzo_min, Timestamp scadenza, int articolo, String proprietario) throws SQLException {
 		
 		String query = "INSERT INTO asta (prezzo_start, rialzo_min, scadenza, articolo, proprietario) VALUES (?, ?, ?, ?, ?)";

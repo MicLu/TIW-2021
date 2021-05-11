@@ -94,16 +94,22 @@ public class MakeOffer extends HttpServlet
 			offer.setTimestamp(new Timestamp(System.currentTimeMillis()));
 			offer.setValore(valore);
 			
-			offerDAO.makeOffer(offer);
-			auctionDAO.updateAuctionPrezzoStart(valore, asta);
+			boolean offerOk = offerDAO.makeOffer(offer);
 			
 			
-			response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId="+asta);
+			if (offerOk) {
+				auctionDAO.updateAuctionPrezzoStart(valore, asta);
+				response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId="+asta);
+			} else 
+			{
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Spiacente l'asta è scaduta, o hai provato a offrire alla tua asta");
+			}
 			
 			
 		}catch (SQLException e)
 		{
 			Debugger.log("SQL exception");
+			e.printStackTrace();
 		} 
 		catch (Exception e)
 		{

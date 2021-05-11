@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.mysql.cj.xdevapi.Statement;
 
+import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.Offer;
 import it.polimi.tiw.debugger.Debugger;
 
@@ -58,21 +59,40 @@ public class OfferDAO {
 		return offers;
 	}
 	
-	public void makeOffer(Offer offer) throws SQLException
+	public boolean makeOffer(Offer offer) throws SQLException
 	{
-		String query = "insert into offerta (offerente, timestamp, valore, asta) values (?,?,?,?)";
-		PreparedStatement pstatement = connection.prepareStatement(query);
+	
 		
-		pstatement.setString(1, offer.getOfferent());
-		pstatement.setString(2, offer.getTimestamp().toString());
-		pstatement.setString(3, Float.toString(offer.getValore()));
-		pstatement.setString(4, Integer.toString(offer.getAsta()));
+		String validatorQuery = "select * from asta where idasta = ? AND stato = 'APERTA' AND proprietario != ?";
+		PreparedStatement validStm = connection.prepareStatement(validatorQuery);
+		validStm.setString(1, Integer.toString(offer.getAsta()));
+		validStm.setString(2, offer.getOfferent());
 		
-		int result = pstatement.executeUpdate();
+		AuctionDAO acDAO = new AuctionDAO(connection);
+		List<Auction> auctions = acDAO.getAuctionList(validStm);
 		
-		Debugger.log("Inserite "+result+" nuove righe");
+		Debugger.log("Aste trovate con Offer: " + auctions.size());
+		
+		if (auctions.size() <= 0 || auctions.isEmpty())
+		{
+			return false;
 			
+		} else {
+		
+			String query = "insert into offerta (offerente, timestamp, valore, asta) values (?,?,?,?)";
+			PreparedStatement pstatement = connection.prepareStatement(query);
 			
+			pstatement.setString(1, offer.getOfferent());
+			pstatement.setString(2, offer.getTimestamp().toString());
+			pstatement.setString(3, Float.toString(offer.getValore()));
+			pstatement.setString(4, Integer.toString(offer.getAsta()));
+			
+			int result = pstatement.executeUpdate();
+			
+			Debugger.log("Inserite "+result+" nuove righe");
+				
+			return true;
+		}
 		
 	}
 	

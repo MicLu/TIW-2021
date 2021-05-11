@@ -53,8 +53,9 @@ public class GetImage extends HttpServlet {
 		System.out.println(filename);
 
 		if (!file.exists() || file.isDirectory()) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not present");
-			return;
+			//response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not present");
+			//return;
+			file = new File(folderPath + "plc.jpg");
 		}
 
 		// set headers for browser
