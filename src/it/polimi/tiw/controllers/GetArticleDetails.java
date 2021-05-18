@@ -18,12 +18,10 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.tiw.beans.Article;
 import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.Offer;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.core.DatabaseConnection;
-import it.polimi.tiw.dao.ArticleDAO;
 import it.polimi.tiw.dao.AuctionDAO;
 import it.polimi.tiw.dao.OfferDAO;
 import it.polimi.tiw.dao.UserDAO;
@@ -126,8 +124,7 @@ public class GetArticleDetails extends HttpServlet {
 		ctx.setVariable("article", auction);
 		ctx.setVariable("auctionOwner", user);
 		ctx.setVariable("offers", offers);
-		Debugger.log(offers.size());
-		ctx.setVariable("HelloName", loggedUser.getNome() + " " + loggedUser.getCognome());
+		Debugger.log("Offerte per questo articolo: " + offers.size());
 		ctx.setVariable("logged_username", loggedUser.getUsername());
 		ctx.setVariable("auctionId", auctionId);
 		ctx.setVariable("minim", minim);

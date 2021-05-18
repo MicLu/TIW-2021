@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.xdevapi.Statement;
-
 import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.Offer;
 import it.polimi.tiw.debugger.Debugger;

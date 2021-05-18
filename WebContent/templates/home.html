@@ -52,7 +52,7 @@
 	                <tbody>
 		                <tr th:if="${AvaiableAuctions.isEmpty}">
 		                	<td>
-		                		<p>Nessuna asta trovata con titolo o descizione contenentet: <span th:text="${searchedKeyword}"></span></p>
+		                		<p>Nessuna asta trovata con titolo o descizione contenente: <span th:text="${searchedKeyword}"></span></p>
 		                	</td>
 						</tr>
 	                    <tr th:each="auction : ${AvaiableAuctions}">

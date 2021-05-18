@@ -89,6 +89,10 @@ public class Auction {
 		return article.getImmagine();
 	}
 	
+	public String getDescrizione() {
+		return article.getDescrizione(); 
+	}
+	
 	
 	
 	

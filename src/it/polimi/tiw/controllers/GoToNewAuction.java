@@ -15,8 +15,6 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.tiw.beans.User;
-
 /**
  * Servlet implementation class GoToNewAuction
  */
@@ -50,14 +48,9 @@ public class GoToNewAuction extends HttpServlet {
 			return;
 		}
 		
-		User user = (User) session.getAttribute("user");
-		
 		String path = "/templates/nuovaAsta.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		
-		//Set user's name to display in the home page
-		ctx.setVariable("HelloName", user.getNome() + " " + user.getCognome());
 		
 		
 		templateEngine.process(path, ctx, response.getWriter());

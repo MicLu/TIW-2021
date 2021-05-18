@@ -83,7 +83,7 @@ public class Search extends HttpServlet {
 		Debugger.log("Cercata la parola: " + request.getParameter("keywordSearch"));
 		
 		if(auctions.isEmpty()) {
-			Debugger.log("Lista aste vuota");
+			Debugger.log("Nessuna asta corrispondente alla parola cercata");
 			ctx.setVariable("searchedKeyword", request.getParameter("keywordSearch"));
 		}
 		

@@ -11,8 +11,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServlet;
-
 import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.AuctionDAO;
 import it.polimi.tiw.debugger.Debugger;
@@ -32,17 +30,18 @@ public class ExpiredAuctionsFilter implements Filter {
 	}
 	
 	@Override
-	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		ServletContext servletContext = config.getServletContext();
 		Connection connection = DatabaseConnection.getConnection(servletContext);
-		Debugger.log("FILTER");
+		
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		AuctionDAO auctionDAO = new AuctionDAO(connection);
-		Debugger.log(now.toString());
+		
+		Debugger.log("FILTRO controllo scadenza aste - in data: " + now.toString());
 		auctionDAO.updateExpiredAuctionStatus(now);
 		
-		chain.doFilter(arg0, arg1);
+		chain.doFilter(request, response);
 	}
 
 }

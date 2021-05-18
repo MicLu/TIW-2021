@@ -98,7 +98,8 @@ public class GetMyAuction extends HttpServlet {
 			ctx.setVariable("MyAuctionC", auctionsClosed);
 			
 			templateEngine.process(path, ctx, response.getWriter());
-
+			
+			//TODO: aggiungere messaggio su mieAste.html quando la lista è vuota
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
