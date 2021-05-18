@@ -78,16 +78,18 @@ public class AuctionDAO {
 	public Auction getAuctionById(int auctionId) throws SQLException
 	{
 		List<Auction> auctions = new ArrayList<Auction>();
-		Auction test = null;
 		String query = "SELECT * FROM asta JOIN articolo on articolo = idarticolo WHERE (idasta = ?) ORDER BY scadenza ASC";
 		
 		try (PreparedStatement stm = connection.prepareStatement(query))
 		{
 			stm.setInt(1, auctionId);
 			auctions = getAuctionList(stm);
-			Debugger.log(Integer.toString(auctions.size()));
+			Debugger.log("Aste trovate: " + Integer.toString(auctions.size()));
 		}
 		
+		if(auctions.isEmpty()) {
+			return null;
+		}
 		return auctions.get(0);
 	}
 	
@@ -194,7 +196,7 @@ public class AuctionDAO {
 			
 			PreparedStatement pstatement = connection.prepareStatement(query);
 			pstatement.setTimestamp(1, now);
-			Debugger.log(pstatement.toString());
+//			Debugger.log(pstatement.toString());
 			int res = pstatement.executeUpdate();
 			Debugger.log("Trovate "+res+" aste scadute");
 			
