@@ -52,15 +52,9 @@ public class CreateAuction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 
-		// If the user is not logged in (not present in session) redirect to the login
+		//Già controllato il login dell'utente con filtro
+		
 		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			String loginpath = getServletContext().getContextPath() + "/index.html";
-			response.sendRedirect(loginpath);
-			return;
-		}
-		
-		
 		
 		boolean badRequest = false;
 		

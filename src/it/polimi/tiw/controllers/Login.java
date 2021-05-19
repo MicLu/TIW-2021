@@ -40,6 +40,8 @@ private TemplateEngine templateEngine;
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		
+		//Già controllate scadenza aste con filtro
 	
 		String username = null;
 		String password = null;
@@ -49,8 +51,8 @@ private TemplateEngine templateEngine;
 		String path;
 		
 		try {
-			username = request.getParameterValues("username")[0];
-			password = request.getParameterValues("password")[0];
+			username = request.getParameter("username");
+			password = request.getParameter("password");
 			//Verifica che ci siano tutti i camp
 			if( username == null || username.isEmpty() ||   
 				password == null || password.isEmpty() ) {

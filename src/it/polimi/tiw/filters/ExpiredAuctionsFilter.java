@@ -6,11 +6,11 @@ import java.sql.Timestamp;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.AuctionDAO;
 import it.polimi.tiw.debugger.Debugger;
@@ -22,17 +22,12 @@ public class ExpiredAuctionsFilter implements Filter {
 		super();
 	}
 	
-	private FilterConfig config;
-
-	@Override
-	public void init(FilterConfig config) {
-	    this.config = config;
-	}
-	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-		ServletContext servletContext = config.getServletContext();
+		HttpServletRequest req = (HttpServletRequest) request;
+		
+		ServletContext servletContext = req.getServletContext();
 		Connection connection = DatabaseConnection.getConnection(servletContext);
 		
 		Timestamp now = new Timestamp(System.currentTimeMillis());

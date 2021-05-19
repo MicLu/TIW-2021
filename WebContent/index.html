@@ -9,7 +9,7 @@
             <div>
                 <h1>Ciao</h1>
                 <h5>Accedi al tuo account</h5>
-                <p th:text=" ${errorMsg}"></p>
+                <p th:text=" ${errorMsg}" class="errorMessage" ></p>
                 <form id = "login" action = "Login" method = "POST">
                     <input class = "loginfield" type = "text" name = "username" placeholder="username">
                     <input class = "loginfield" type = "password" name = "password" placeholder="password">

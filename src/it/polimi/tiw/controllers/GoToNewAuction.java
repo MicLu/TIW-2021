@@ -8,8 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -40,13 +38,7 @@ public class GoToNewAuction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = getServletContext().getContextPath() + "/index.html";
-		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			response.sendRedirect(loginpath);
-			return;
-		}
+		//Già controllato il login dell'utente con filtro
 		
 		String path = "/templates/nuovaAsta.html";
 		ServletContext servletContext = getServletContext();

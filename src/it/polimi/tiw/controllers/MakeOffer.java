@@ -41,6 +41,9 @@ public class MakeOffer extends HttpServlet
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//Già controllato il login dell'utente con filtro
+		//Già controllate scadenza aste con filtro
+		
 		// Leggo i parametri e creo l'offerta
 		String loginpath = getServletContext().getContextPath() + "/index.html";
 		

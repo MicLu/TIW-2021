@@ -51,55 +51,52 @@ public class GetMyAuction extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// If the user is not logged in (not present in session) redirect to the login
-			String loginpath = getServletContext().getContextPath() + "/index.html";
-			HttpSession session = request.getSession();
-			if (session.isNew() || session.getAttribute("user") == null) {
-				response.sendRedirect(loginpath);
-				return;
-			}
-			
-			User user = (User) session.getAttribute("user");
+		//Già controllato il login dell'utente con filtro
+		//Già controllate scadenza aste con filtro
 		
-			String path = "/templates/mieAste.html";
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		HttpSession session = request.getSession();
 			
-			AuctionDAO auctionDAO = new AuctionDAO(connection);
-			List<Auction> auctions = new ArrayList<Auction>();
+		User user = (User) session.getAttribute("user");
+	
+		String path = "/templates/mieAste.html";
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		
+		AuctionDAO auctionDAO = new AuctionDAO(connection);
+		List<Auction> auctions = new ArrayList<Auction>();
+		
+		List<Auction> auctionsOpen = new ArrayList<Auction>();
+		List<Auction> auctionsClosed = new ArrayList<Auction>();
+		
+		
+		
+		//Get the list of all auction for the logged user
+		
+		try {
+			auctions = auctionDAO.getAllMyAuction(user.getUsername());
 			
-			List<Auction> auctionsOpen = new ArrayList<Auction>();
-			List<Auction> auctionsClosed = new ArrayList<Auction>();
-			
-			
-			
-			//Get the list of all auction for the logged user
-			
-			try {
-				auctions = auctionDAO.getAllMyAuction(user.getUsername());
-				
-				for (Auction auction : auctions)
+			for (Auction auction : auctions)
+			{
+				if (auction.getAuctionStatus() == AuctionStatus.CHIUSA)
 				{
-					if (auction.getAuctionStatus() == AuctionStatus.CHIUSA)
-					{
-						auctionsClosed.add(auction);
-					} else
-					{
-						auctionsOpen.add(auction);
-					} 
-				}
-				
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
+					auctionsClosed.add(auction);
+				} else
+				{
+					auctionsOpen.add(auction);
+				} 
 			}
 			
-			ctx.setVariable("MyAuctionO", auctionsOpen);
-			ctx.setVariable("MyAuctionC", auctionsClosed);
+		} catch (SQLException e) {
 			
-			templateEngine.process(path, ctx, response.getWriter());
-			
-			//TODO: aggiungere messaggio su mieAste.html quando la lista è vuota
+			e.printStackTrace();
+		}
+		
+		ctx.setVariable("MyAuctionO", auctionsOpen);
+		ctx.setVariable("MyAuctionC", auctionsClosed);
+		
+		templateEngine.process(path, ctx, response.getWriter());
+		
+		//TODO: aggiungere messaggio su mieAste.html quando la lista è vuota
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
