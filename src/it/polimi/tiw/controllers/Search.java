@@ -83,7 +83,7 @@ public class Search extends HttpServlet {
 			ctx.setVariable("searchedKeyword", request.getParameter("keywordSearch"));
 		}
 		
-		ctx.setVariable("AvaiableAuctions", auctions);
+		ctx.setVariable("SearchedAuctions", auctions);
 		
 		templateEngine.process(path, ctx, response.getWriter());
 		

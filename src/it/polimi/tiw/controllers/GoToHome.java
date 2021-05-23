@@ -78,7 +78,6 @@ public class GoToHome extends HttpServlet {
 		
 		if(auctions.isEmpty()) {
 			Debugger.log("Lista aste consultabili vuota");
-			//TODO: gestire rappresentazione lista vuota su html
 		}
 		
 		ctx.setVariable("AvaiableAuctions", auctions);
