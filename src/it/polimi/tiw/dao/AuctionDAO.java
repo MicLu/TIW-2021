@@ -228,5 +228,20 @@ public class AuctionDAO {
 		
 	}
 	
+	public int closeMyAuction(int auctionId, String proprietario) throws SQLException{
+		
+		String query = "UPDATE asta SET stato = 'CHIUSA' WHERE stato = 'SCADUTA' AND idasta = ? AND proprietario = ?";
+		
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			
+			pstatement.setInt(1, auctionId);
+			pstatement.setString(2, proprietario);
+			
+			return pstatement.executeUpdate();
+			
+		}
+
+	}
+	
 
 }

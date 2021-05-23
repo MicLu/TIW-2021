@@ -24,7 +24,7 @@ public class OfferDAO {
 		List<Offer> offers = new ArrayList<Offer>();
 		
 		//String query = "SELECT asta.idasta as id, utenti.nome as uNome, utenti.cognome as uCognome, offerta.timestamp as time, offerta.valore as val FROM articolo JOIN asta ON articolo.idarticolo = asta.articolo JOIN offerta ON offerta.asta = asta.idasta JOIN utenti ON offerta.offerente = utenti.username WHERE articolo.idarticolo = ? ORDER BY offerta.valore DESC LIMIT 10";
-		String query = "SELECT offerta.valore as val, asta.idasta as id, utenti.nome as unome, utenti.cognome as ucognome from offerta join asta on offerta.asta = asta.idasta join utenti on utenti.username = offerta.offerente where asta.idasta = ? order by offerta.valore desc limit 10";
+		String query = "SELECT offerta.valore as val, asta.idasta as id, utenti.nome as unome, utenti.cognome as ucognome, utenti.username as username from offerta join asta on offerta.asta = asta.idasta join utenti on utenti.username = offerta.offerente where asta.idasta = ? order by offerta.valore desc limit 10";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);)
 		{
 			pstatement.setString(1, Integer.toString(item));
@@ -44,9 +44,9 @@ public class OfferDAO {
 			{
 				Offer offer = new Offer();
 				String offerent = result.getString("unome") + " " + result.getString("ucognome");
-				Debugger.log(offerent);
-				
-				offer.setOfferent(offerent);
+//				Debugger.log(offerent);
+				offer.setOfferenteCompleto(offerent);
+				offer.setOfferente(result.getString("username"));
 				offer.setValore(result.getFloat("val"));
 				offer.setAsta(Integer.parseInt(result.getString("id")));
 				
@@ -61,10 +61,11 @@ public class OfferDAO {
 	{
 	
 		
-		String validatorQuery = "select * from asta where idasta = ? AND stato = 'APERTA' AND proprietario != ?";
+//		String validatorQuery = "select * from asta where idasta = ? AND stato = 'APERTA' AND proprietario != ?";
+		String validatorQuery = "select * from asta join articolo on asta.articolo = articolo.idarticolo where idasta = ? AND stato = 'APERTA' AND proprietario != ?";
 		PreparedStatement validStm = connection.prepareStatement(validatorQuery);
 		validStm.setString(1, Integer.toString(offer.getAsta()));
-		validStm.setString(2, offer.getOfferent());
+		validStm.setString(2, offer.getOfferente());
 		
 		AuctionDAO acDAO = new AuctionDAO(connection);
 		List<Auction> auctions = acDAO.getAuctionList(validStm);
@@ -80,7 +81,7 @@ public class OfferDAO {
 			String query = "insert into offerta (offerente, timestamp, valore, asta) values (?,?,?,?)";
 			PreparedStatement pstatement = connection.prepareStatement(query);
 			
-			pstatement.setString(1, offer.getOfferent());
+			pstatement.setString(1, offer.getOfferente());
 			pstatement.setString(2, offer.getTimestamp().toString());
 			pstatement.setString(3, Float.toString(offer.getValore()));
 			pstatement.setString(4, Integer.toString(offer.getAsta()));

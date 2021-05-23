@@ -19,6 +19,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.tiw.beans.Auction;
+import it.polimi.tiw.beans.AuctionStatus;
 import it.polimi.tiw.beans.Offer;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.core.DatabaseConnection;
@@ -117,13 +118,33 @@ public class GetArticleDetails extends HttpServlet {
 		String path = "/templates/dettaglio.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("article", auction);
+		ctx.setVariable("auction", auction);
 		ctx.setVariable("auctionOwner", user);
 		ctx.setVariable("offers", offers);
 		Debugger.log("Offerte per questo articolo: " + offers.size());
 		ctx.setVariable("logged_username", loggedUser.getUsername());
 		ctx.setVariable("auctionId", auctionId);
 		ctx.setVariable("minim", minim);
+		
+		//Send auctionWinner'infos to template engine
+		User auctionWinner = null;
+		if(auction.getAuctionStatus()==AuctionStatus.CHIUSA) {
+			if(offers.size()>0) {
+				try {
+					//First element is the last offer
+					Offer lastOffer = offers.get(0);
+					auctionWinner = userDAO.getUserByUsername(lastOffer.getOfferente());
+				}
+				catch (SQLException e) {
+					Debugger.log("Errore nella ricerca del vincitore dell'asta");
+					e.printStackTrace();
+				}
+				
+			}
+			
+			ctx.setVariable("auctionWinner", auctionWinner);
+		}
+		
 		templateEngine.process(path, ctx, response.getWriter());
 		
 	}

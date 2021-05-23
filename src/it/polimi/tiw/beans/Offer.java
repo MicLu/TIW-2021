@@ -8,8 +8,7 @@ public class Offer {
 	private Timestamp timestamp;
 	private float valore;
 	private int asta;
-	
-	private String offerent;
+	private String offerenteCompleto;
 	
 	public Offer() {
 	}
@@ -45,15 +44,13 @@ public class Offer {
 	public void setAsta(int asta) {
 		this.asta = asta;
 	}
-	
-	public void setOfferent(String offerent)
-	{
-		this.offerent = offerent;
+
+	public String getOfferenteCompleto() {
+		return offerenteCompleto;
 	}
-	
-	public String getOfferent()
-	{
-		return offerent;
+
+	public void setOfferenteCompleto(String offerenteCompleto) {
+		this.offerenteCompleto = offerenteCompleto;
 	}
 	
 	

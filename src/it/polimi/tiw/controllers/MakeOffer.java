@@ -44,16 +44,9 @@ public class MakeOffer extends HttpServlet
 		//Già controllato il login dell'utente con filtro
 		//Già controllate scadenza aste con filtro
 		
-		// Leggo i parametri e creo l'offerta
-		String loginpath = getServletContext().getContextPath() + "/index.html";
-		
 		Offer offer = new Offer();
 		
 		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			response.sendRedirect(loginpath);
-			return;
-		}
 		
 		User user = (User) session.getAttribute("user");
 		
@@ -66,7 +59,8 @@ public class MakeOffer extends HttpServlet
 		int asta = 0;
 		float rialzo_min = 0;
 		float corrente = 0;
-		
+
+		// Leggo i parametri e creo l'offerta
 		try {
 			
 			timestamp = 500;
@@ -93,7 +87,7 @@ public class MakeOffer extends HttpServlet
 			}
 			
 			offer.setAsta(asta);
-			offer.setOfferent(offerente);
+			offer.setOfferente(offerente);
 			offer.setTimestamp(new Timestamp(System.currentTimeMillis()));
 			offer.setValore(valore);
 			
@@ -114,6 +108,12 @@ public class MakeOffer extends HttpServlet
 			Debugger.log("SQL exception");
 			e.printStackTrace();
 		} 
+		catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Input non valido");
+			Debugger.log("Input non valido");
+			return;
+			
+		}
 		catch (Exception e)
 		{
 			e.printStackTrace();

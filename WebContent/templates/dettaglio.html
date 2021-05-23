@@ -1,107 +1,135 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <link rel = "stylesheet" type = "text/css" media="all" href="../css/style.css" th:href="@{/css/style.css}">
-        <link rel = "stylesheet" type = "text/css" media="all" href="../css/dettaglio.css" th:href="@{/css/dettaglio.css}">
 
-        <title>AsteTIW - Bacheca</title>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="all" href="../css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="../css/dettaglio.css" th:href="@{/css/dettaglio.css}">
 
-        <div id = "header">
-            <div id = "navbar">
-                <div>Ciao <span th:text=" ${session.user.nome + ' ' + session.user.cognome}"></span></div>
-                <div></div>
+    <title>AsteTIW - Bacheca</title>
+
+    <div id="header">
+        <div id="navbar">
+            <div>Ciao <span th:text=" ${session.user.nome + ' ' + session.user.cognome}"></span></div>
+            <div></div>
+            <div>
+                <ul class="nav-menu-right">
+                    <li class="nav-element"><a th:href="@{/Logout}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="main-header">
+            <div id="site-logo">
+                <center>
+                    <a th:href="@{/Home}">
+                        <img class="sitelogo" src="images/logo.jpg">
+                    </a>
+                </center>
+            </div>
+            <div id="searchbar">
+                <form action="Search" method="GET">
+                    <input class="searchbar" style="width: 80%;" type="text" name="keywordSearch">
+                    <input class="searchbtn" type="submit" value="Cerca">
+                </form>
+            </div>
+        </div>
+    </div>
+</head>
+
+<body>
+    <div id="page-container-dettaglio">
+
+
+        <div id="inner-container">
+            <div class="dettaglio">
                 <div>
-                    <ul class = "nav-menu-right">
-                        <li class = "nav-element"><a th:href="@{/Logout}">Logout</a></li>
-                    </ul>
+                    <img class="product-image" th:src="@{/GetImage(image=${auction.image})}">
                 </div>
-            </div>
-            <div id = "main-header">
-                <div id = "site-logo">
-                    <center>
-                    	<a th:href="@{/Home}">
-                    		<img class = "sitelogo" src="images/logo.jpg">
-                    	</a>
-                    </center>
-                </div>
-                <div id = "searchbar">
-                    <form action="Search" method="GET">
-                        <input class = "searchbar" style = "width: 80%;" type="text" name = "keywordSearch">
-                        <input class = "searchbtn" type="submit" value = "Cerca">
-                    </form>
+                <div class="product-content">
+                    <div class="product-name">
+                        <span th:text="${auction.name}">Nome del prodotto</span>
+                        <hr class="divider">
+                    </div>
+                    <div class="product-content">
+                        <div>Venduto da: <span th:text="${auctionOwner.nome + ' ' + auctionOwner.cognome}">Nome Cognome</span></div>
+                        <div>Scadenza: <span th:text="${auction.scadenza}">Scadenza</span></div>
+                        <div>Descrizione: <span th:text="${auction.descrizione}">Descrizione</span></div>
+                        <table>
+                            <tr>
+                                <td>Offerta corrente</td>
+                                <td><span th:text="${auction.prezzo_start}">0,00</span>&euro;</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <form action="MakeOffer" method="POST">
+                                    <td>
+                                        <input name="valore">
+
+                                        <p>Minimo: <span th:text="${minim}">0,00</span>&euro;</p>
+
+                                        <input name="asta" style="display:none;" th:value="${auctionId}">
+                                        <input name="min" style="display:none;" th:value="${auction.rialzo_min}">
+                                        <input name="offerente" style="display:none;" th:value="${logged_username}">
+                                        <input name="corrente" style="display:none;" th:value="${auction.prezzo_start}">
+                                    </td>
+                                    <td>
+                                        <input type="submit" value="Offri">
+                                    </td>
+                                </form>
+                            </tr>
+                        </table>
+                        <div class="big-link-btn" th:if="${auction.auctionStatus.name() == 'SCADUTA' and auctionOwner.username == session.user.username}">
+                            <a th:href="@{/CloseAuction(auctionId=${auction.idAsta})}">
+                                    Chiudi asta
+                                </a>
+                        </div>
+                        <table th:if="${auction.auctionStatus.name() == 'CHIUSA'}">
+                            <!-- Se non c'è un vincitore mostra "nessuna offerta ricevuta" -->
+                            <div th:if="${#lists.isEmpty(offers)}">
+                                Asta scaduta senza offerte
+                            </div>
+                            <div th:if="${not #lists.isEmpty(offers)}">
+                                <th>Asta vinta da:</th>
+                                <tr>
+                                    <td>
+                                        <span th:text=${auctionWinner.nome}>NomeVincitore</span> <span th:text=${auctionWinner.cognome}>CognomeVincitore</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Prezzo finale <span th:text="${auction.prezzo_start}"></span> </td>
+                                </tr>
+                                <tr>
+                                    <td>Indirizzo vincitore: <span th:text=${auctionWinner.indirizzo}></span></td>
+                                </tr>
+                            </div>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </head>
-    <body>
-        <div id = "page-container-dettaglio">
-            
-            
-            <div id = "inner-container">
-                <div class = "dettaglio">
-                    <div>
-                        <img  class = "product-image" th:src="@{/GetImage(image=${article.image})}">
-                    </div>
-                    <div class = "product-content">
-                        <div class = "product-name">
-                            <span th:text="${article.name}">Nome del prodotto</span>
-                            <hr class = "divider">
-                        </div>
-                        <div class = "product-content">
-                            <div>Venduto da: <span th:text="${auctionOwner.nome + ' ' + auctionOwner.cognome}">Nome Cognome</span></div>
-                            <div>Scadenza: <span th:text="${article.scadenza}">Scadenza</span></div>
-                            <div>Descrizione: <span th:text="${article.descrizione}">Descrizione</span></div>
-                            <table>
-                                <tr>
-                                    <td>Offerta corrente</td>
-                                    <td><span th:text="${article.prezzo_start}">0,00</span>&euro;</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <form action = "MakeOffer" method = "POST">
-                                    <td>
-                                        <input name = "valore">
-                                        
-                                       	<p>Minimo: <span th:text="${minim}">0,00</span>&euro;</p>
-                                        
-                                        <input name = "asta" style = "display:none;" th:value="${auctionId}">
-                                        <input name = "min" style = "display:none;" th:value="${article.rialzo_min}">
-                                        <input name = "offerente" style = "display:none;" th:value="${logged_username}">
-                                        <input name = "corrente" style = "display:none;" th:value="${article.prezzo_start}">
-                                    </td>
-                                    <td>
-                                        <input type = "submit" value = "Offri">
-                                    </td>
-                                    </form>
-                                </tr>
-                            </table>
-                        </div>
-                        
-                    </div>
+
+
+        <div id="sidebar-right-dettaglio">
+            <div>Offerte</div>
+            <hr class="divider">
+            <div class="box-offerte" th:remove="all-but-first" th:each="offer : ${offers}">
+                <div class="offerta">
+                    <div><span th:text="${offer.offerenteCompleto}">Mattia Malacarne</span></div>
+                    <div style="text-align: end;"><span th:text="${offer.valore}">0,00</span>&euro;</div>
                 </div>
-            </div>
-
-
-            <div id = "sidebar-right-dettaglio">
-                <div>Offerte</div>
-                <hr class = "divider">
-                <div class = "box-offerte" th:remove="all-but-first" th:each="offer : ${offers}">
-                    <div class = "offerta">
-                        <div><span th:text="${offer.offerent}">Mattia Malacarne</span></div>
-                        <div style = "text-align: end;"><span th:text="${offer.valore}">0,00</span>&euro;</div>
-                    </div>
-                    <div class = "offerta">
-                        <div><span>Michele Lucio</span></div>
-                        <div style = "text-align: end;"><span>0,00</span>&euro;</div>
-                    </div>
-                    <div class = "offerta">
-                        <div><span>Mattia Malacarne</span></div>
-                        <div style = "text-align: end;"><span>0,00</span>&euro;</div>
-                    </div>
+                <div class="offerta">
+                    <div><span>Michele Lucio</span></div>
+                    <div style="text-align: end;"><span>0,00</span>&euro;</div>
+                </div>
+                <div class="offerta">
+                    <div><span>Mattia Malacarne</span></div>
+                    <div style="text-align: end;"><span>0,00</span>&euro;</div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
