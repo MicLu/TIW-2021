@@ -63,11 +63,20 @@
                             <div class="auc-owner"></div>
                             <div class="pricebox">
                                 <div class="auc-price">Offerta corrente: <span th:text="${auction.prezzo_start}">0,00</span>&euro;</div>
-                                <div class="auc-timer">Scadenza: <span th:text="${auction.scadenza}">1d 2h rimanenti</span></div>
+                                <div class="auc-timer">Scadenza:
+                                    <span th:if="${auction.auctionStatus.name() == 'SCADUTA'}" class="errorMessage">
+                                        <span th:text="${auction.scadenza}">
+                                            1d 2h rimanenti
+                                        </span>
+                                    <br>Asta scaduta
+                                    </span>
+                                    <span th:if="${auction.auctionStatus.name() != 'SCADUTA'}">
+                                        <span th:text="${auction.scadenza}">
+                                            1d 2h rimanenti
+                                        </span>
+                                    </span>
+                                </div>
                             </div>
-                            <span th:if="${auction.auctionStatus.name() == 'SCADUTA'}" class="errorMessage">
-                                Asta scaduta
-                            </span>
                         </td>
                     </tr>
 
