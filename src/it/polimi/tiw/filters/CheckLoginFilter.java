@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.polimi.tiw.debugger.Debugger;
+import it.polimi.tiw.utils.Debugger;
 
 public class CheckLoginFilter implements Filter{
 

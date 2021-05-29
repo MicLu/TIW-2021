@@ -9,7 +9,7 @@ import java.util.List;
 
 import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.Offer;
-import it.polimi.tiw.debugger.Debugger;
+import it.polimi.tiw.utils.Debugger;
 
 public class OfferDAO {
 	

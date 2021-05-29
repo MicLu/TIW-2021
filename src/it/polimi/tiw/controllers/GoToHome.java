@@ -19,9 +19,9 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.AuctionDAO;
-import it.polimi.tiw.debugger.Debugger;
+import it.polimi.tiw.utils.DatabaseConnection;
+import it.polimi.tiw.utils.Debugger;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.beans.Auction;
 

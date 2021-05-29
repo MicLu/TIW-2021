@@ -11,9 +11,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import it.polimi.tiw.core.DatabaseConnection;
+
 import it.polimi.tiw.dao.AuctionDAO;
-import it.polimi.tiw.debugger.Debugger;
+import it.polimi.tiw.utils.DatabaseConnection;
+import it.polimi.tiw.utils.Debugger;
 
 public class ExpiredAuctionsFilter implements Filter {
 

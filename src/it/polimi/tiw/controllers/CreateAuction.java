@@ -23,10 +23,10 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import it.polimi.tiw.beans.Article;
-import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.ArticleDAO;
 import it.polimi.tiw.dao.AuctionDAO;
-import it.polimi.tiw.debugger.Debugger;
+import it.polimi.tiw.utils.DatabaseConnection;
+import it.polimi.tiw.utils.Debugger;
 import it.polimi.tiw.beans.User;
 
 /**

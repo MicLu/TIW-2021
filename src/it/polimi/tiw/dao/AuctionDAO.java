@@ -11,7 +11,7 @@ import java.util.List;
 import it.polimi.tiw.beans.Article;
 import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.AuctionStatus;
-import it.polimi.tiw.debugger.Debugger;
+import it.polimi.tiw.utils.Debugger;
 
 public class AuctionDAO {
 	

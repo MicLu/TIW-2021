@@ -22,11 +22,11 @@ import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.AuctionStatus;
 import it.polimi.tiw.beans.Offer;
 import it.polimi.tiw.beans.User;
-import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.AuctionDAO;
 import it.polimi.tiw.dao.OfferDAO;
 import it.polimi.tiw.dao.UserDAO;
-import it.polimi.tiw.debugger.Debugger;
+import it.polimi.tiw.utils.DatabaseConnection;
+import it.polimi.tiw.utils.Debugger;
 
 /**
  * Servlet implementation class GetAuctionDetails

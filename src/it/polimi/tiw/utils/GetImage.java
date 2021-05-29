@@ -1,4 +1,4 @@
-package it.polimi.tiw.core;
+package it.polimi.tiw.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import it.polimi.tiw.debugger.Debugger;
 
 /**
  * Servlet implementation class GetFile

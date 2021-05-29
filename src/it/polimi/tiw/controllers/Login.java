@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import it.polimi.tiw.beans.User;
-import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.UserDAO;
+import it.polimi.tiw.utils.DatabaseConnection;
+
 import org.thymeleaf.*;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;

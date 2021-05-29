@@ -22,8 +22,8 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import it.polimi.tiw.beans.Auction;
 import it.polimi.tiw.beans.AuctionStatus;
 import it.polimi.tiw.beans.User;
-import it.polimi.tiw.core.DatabaseConnection;
 import it.polimi.tiw.dao.AuctionDAO;
+import it.polimi.tiw.utils.DatabaseConnection;
 
 /**
  * Servlet implementation class GetMyAuction

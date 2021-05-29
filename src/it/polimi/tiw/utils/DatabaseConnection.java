@@ -1,13 +1,8 @@
-package it.polimi.tiw.core;
+package it.polimi.tiw.utils;
 
 import java.sql.*;
 
 import javax.servlet.*;
-
-
-//import org.json.simple.*;
-
-import it.polimi.tiw.debugger.Debugger;
 
 
 public class DatabaseConnection
