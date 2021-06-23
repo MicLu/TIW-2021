@@ -74,7 +74,7 @@ private TemplateEngine templateEngine;
 		try {
 			user = userDAO.checkUserCredential(username, password);
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Non ï¿½ possibile controllare le credenziali");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Non è possibile controllare le credenziali");
 			return;
 		}
 		

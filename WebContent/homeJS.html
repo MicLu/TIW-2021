@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" media="all" href="css/style.css">
-    
-    
-    
+    <script src="scripts/loginManagement.js" defer></script>
+    <script src="scripts/pagecontroller.js" defer></script>
 
-    <title>AsteTIW - Bacheca</title>
+    <title>AsteTIW</title>
 
     <div id="header">
         <div id="navbar">
-            <div>Ciao <span th:text=" ${session.user.nome + ' ' + session.user.cognome}"></span></div>
+            <div>Ciao <span id="id_username"></span></div>
             <div></div>
             <div>
                 <ul class="nav-menu-right">
-                    <li class="nav-element"><a th:href="@{/Logout}">Logout</a></li>
+                    <li class="nav-element"><a href="Logout">Logout</a></li>
                 </ul>
             </div>
         </div>
         <div id="main-header">
             <div id="site-logo">
                 <center>
-                    <a th:href="@{/Home}">
+                    <a href="homeJS.html">
                         <img class="sitelogo" src="images/logo.jpg">
                     </a>
                 </center>
             </div>
             <div id="searchbar">
-                <form action="Search" method="GET">
+                <form action="#">
                     <input class="searchbar" style="width: 80%;" type="text" name="keywordSearch">
                     <input class="searchbtn" type="submit" value="Cerca">
                 </form>
             </div>
+            <div id="id_alert" class="errorMessage"></div>
         </div>
     </div>
 </head>
@@ -45,110 +45,104 @@
             <a th:href="@{/NewAuction}" style="text-decoration: none;">
                 <div class="big-link-btn">Vendo</div>
             </a><br>
-            <a th:href="@{/GetMyAuction}" style="text-decoration: none;" id = "my-auc-btn">
+            <a th:href="@{/GetMyAuction}" style="text-decoration: none;" id="my-auc-btn">
                 <div class="big-link-btn">Le mie aste</div>
             </a>
         </div>
+
         <div id="inner-container">
-            <div id="page-title">
-                <h1 id = "current-selection-title">Aste disponibili</h1>
-            </div>
-            <!-- Aste disponibili per comprare -->
-            <table class="auction-list hidden-auc-list" id = "av-auc-list">
-                <tbody>
-                    <tr>
-                        <td>
-                            <p>Nessuna asta consultabile</p>
-                        </td>
-                    </tr>
-                    <!--
+
+
+            <!-- Aste disponibili per l'acquisto -->
+            <table class="auction-list" id="av-auc-list-container">
+
+                <div id="page-title">
+                    <h1 id="current-selection-title">Aste disponibili</h1>
+                </div>
+
+                <tbody id="av-auc-list-body">
+
                     <tr>
                         <td class="auc-list-image">
-                            // Image
-                            <img class="auction-img">
+                            <img class="auction-img" id="auction_immagine">
                         </td>
+
                         <td>
-                            <div class="auc-title"><a class="detail-link"><span class = "auction-name"></span></a></div>
-                            <div class="auc-owner"></div>
+                            <div class="auc-title"><a class="detail-link"><span class ="auction-name" id="auction_titolo"></span></a></div>
+                            <div class="auc-owner" id="auction_proprietario"></div>
                             <div class="pricebox">
-                                <div class="auc-price">Offerta corrente: <span th:text="${auction.prezzo_start}">0,00</span>&euro;</div>
-                                <div class="auc-timer">Scadenza: <span th:text="${auction.scadenza}">1d 2h rimanenti</span></div>
+                                <div class="auc-price">Offerta corrente: <span id="auction_prezzo_start"></span>&euro;</div>
+                                <div class="auc-timer">Scadenza: <span id="auction_scadenza"></span></div>
                             </div>
                         </td>
                     </tr>
-                -->
 
                 </tbody>
 
             </table>
 
             <!-- Mie aste aperte -->
-            <table class="auction-list hidden-auc-list" id = "my-open-auc-list">
-                <tbody>
-                    <tr>
-                        <td>
-                            <p>Nessuna asta consultabile</p>
-                        </td>
-                    </tr>
-                    <!--
+            <table class="auction-list" id="my-open-auc-list-container">
+
+                <div id="page-title">
+                    <h1>Aste aperte</h1>
+                </div>
+                <tbody id="my-open-auc-list-body">
+
                     <tr>
                         <td class="auc-list-image">
-                            // Image
-                            <img class="auction-img">
+                            <img class="auction-img" id="auction_immagine">
                         </td>
+
                         <td>
-                            <div class="auc-title"><a class="detail-link"><span class = "auction-name"></span></a></div>
-                            <div class="auc-owner"></div>
+                            <div class="auc-title"><a class="detail-link"><span class ="auction-name" id="auction_titolo"></span></a></div>
+                            <div class="auc-owner" id="auction_proprietario"></div>
                             <div class="pricebox">
-                                <div class="auc-price">Offerta corrente: <span th:text="${auction.prezzo_start}">0,00</span>&euro;</div>
-                                <div class="auc-timer">Scadenza: <span th:text="${auction.scadenza}">1d 2h rimanenti</span></div>
+                                <div class="auc-price">Offerta corrente: <span id="auction_prezzo_start"></span>&euro;</div>
+                                <div class="auc-timer">Scadenza: <span id="auction_scadenza"></span></div>
                             </div>
                         </td>
                     </tr>
-                -->
 
                 </tbody>
 
             </table>
 
             <!-- Mie aste chiuse -->
-            <table class="auction-list hidden-auc-list" id = "my-closed-auc-list">
-                <tbody>
-                    <tr>
-                        <td>
-                            <p>Nessuna asta consultabile</p>
-                        </td>
-                    </tr>
-                    <!--
+            <table class="auction-list" id="my-closed-auc-list-container">
+
+                <div id="page-title">
+                    <h1>Aste chiuse</h1>
+                </div>
+                <tbody id="my-closed-auc-list-body">
+
                     <tr>
                         <td class="auc-list-image">
-                            // Image
-                            <img class="auction-img">
+                            <img class="auction-img" id="auction_immagine">
                         </td>
+
                         <td>
-                            <div class="auc-title"><a class="detail-link"><span class = "auction-name"></span></a></div>
-                            <div class="auc-owner"></div>
+                            <div class="auc-title"><a class="detail-link"><span class ="auction-name" id="auction_titolo"></span></a></div>
+                            <div class="auc-owner" id="auction_proprietario"></div>
                             <div class="pricebox">
-                                <div class="auc-price">Offerta corrente: <span th:text="${auction.prezzo_start}">0,00</span>&euro;</div>
-                                <div class="auc-timer">Scadenza: <span th:text="${auction.scadenza}">1d 2h rimanenti</span></div>
+                                <div class="auc-price">Offerta corrente: <span id="auction_prezzo_start"></span>&euro;</div>
+                                <div class="auc-timer">Scadenza: <span id="auction_scadenza"></span></div>
                             </div>
                         </td>
                     </tr>
-                -->
 
                 </tbody>
 
             </table>
+
+            <!--Dettaglio asta-->
+
+            <!--Nuova asta-->
+
+
         </div>
         <div id="sidebar-right"></div>
     </div>
 </body>
-
-<script src = "scripts/pagecontroller.js"></script>
-<script src = "scripts/loginManagement.js"></script>
-
-<script>
-    	isLogged();
-    </script>
 
 </html>
