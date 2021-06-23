@@ -4,6 +4,9 @@
 
 (function() { // avoid variables ending up in the global scope
 
+
+	
+
     document.getElementById("loginbutton").addEventListener('click', (e) => {
 
         //var form = e.target.closest("form"); //Form con usernam e psw
@@ -19,7 +22,7 @@
                                 //salva variabile a livello di sessione
                                 sessionStorage.setItem('username', message);
                                 //Reindirizzo l'utente
-                                window.location.href = "/templates/homeJS.html";
+                                window.location.href = "homeJS.html";
                                 break;
                             case 400: // bad request
                                 document.getElementById("errorMsg").textContent = message;
@@ -40,3 +43,4 @@
     });
 
 })();
+

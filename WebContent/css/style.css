@@ -193,3 +193,8 @@ body
 .errorMessage{
 	color: red;
 }
+
+.hidden-auc-list
+{
+    display: none;
+}
