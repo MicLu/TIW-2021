@@ -6,10 +6,11 @@
 
     document.getElementById("loginbutton").addEventListener('click', (e) => {
 
-        var form = e.target.closest("form"); //Form con usernam e psw
+        //var form = e.target.closest("form"); //Form con usernam e psw
+        var form = document.getElementById("login")
 
         if (form.checkValidity()) {
-            makeCall("POST", 'LoginJS', e.target.closest("form"),
+            makeCall("POST", 'LoginJS', form,
                 function(req) {
                     if (req.readyState == XMLHttpRequest.DONE) {
                         var message = req.responseText;
@@ -18,7 +19,7 @@
                                 //salva variabile a livello di sessione
                                 sessionStorage.setItem('username', message);
                                 //Reindirizzo l'utente
-                                window.location.href = "homeJS.html";
+                                window.location.href = "/templates/homeJS.html";
                                 break;
                             case 400: // bad request
                                 document.getElementById("errorMsg").textContent = message;

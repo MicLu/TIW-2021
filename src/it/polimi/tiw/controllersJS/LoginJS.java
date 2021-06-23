@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,11 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.dao.UserDAO;
 import it.polimi.tiw.utils.DatabaseConnection;
+import it.polimi.tiw.utils.Debugger;
 
 /**
  * Servlet implementation class LoginJS
  */
 @WebServlet("/LoginJS")
+@MultipartConfig
 public class LoginJS extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +33,7 @@ public class LoginJS extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		//TODO: Giï¿½ controllate scadenza aste con filtro
+		//TODO: Già controllate scadenza aste con filtro
 	
 		String username = null;
 		String password = null;
@@ -38,6 +41,10 @@ public class LoginJS extends HttpServlet {
 		try {
 			username = request.getParameter("username");
 			password = request.getParameter("password");
+			
+			Debugger.log("username: " + username);
+			Debugger.log("password: " + password);
+			
 			//Verifica che ci siano tutti i camp
 			if( username == null || username.isEmpty() ||   
 				password == null || password.isEmpty() ) {
@@ -59,7 +66,7 @@ public class LoginJS extends HttpServlet {
 			user = userDAO.checkUserCredential(username, password);
 		} catch (SQLException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			response.getWriter().println("Non ï¿½ possibile controllare le credenziali");
+			response.getWriter().println("Non è possibile controllare le credenziali");
 			return;
 		}
 		
