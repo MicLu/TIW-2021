@@ -42,13 +42,15 @@ public class GetAvailableAuctionJS extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 
-		//Già controllato il login dell'utente con filtro
-		//Già controllate scadenza aste con filtro
+		//Giï¿½ controllato il login dell'utente con filtro
+		//Giï¿½ controllate scadenza aste con filtro
 		
 		HttpSession session = request.getSession();
 		
 		User user = (User) session.getAttribute("user");
+		Debugger.log(user.toString());
 		
+		Debugger.log(user.getUsername());
 		AuctionDAO auctionDAO = new AuctionDAO(connection);
 		List<Auction> auctions = new ArrayList<Auction>();
 		

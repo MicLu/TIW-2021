@@ -25,13 +25,15 @@
 
     function AsteDisponibili(alertContainer, listContainer, listContainerBody) {
 
+        console.log("ASTEDISP OK");
+
         this.alertContainer = alertContainer;
         this.listContainer = listContainer;
         this.listContainerBody = listContainerBody;
 
         this.reset = function() {
             //Nascondo l'intera tabella
-            this.listcontainer.style.visibility = "hidden";
+            this.listContainer.style.visibility = "hidden";
         }
 
         this.show = function() {
@@ -42,7 +44,9 @@
                         var message = req.responseText;
                         if (req.status == 200) {
                             var listaAste = JSON.parse(req.responseText);
+                            console.log(listaAste);
                             if (listaAste.length == 0) {
+                                console.log("Lista vuota");
                                 self.alertContainer.textContent = "Nessuna asta disponibile";
                                 return;
                             }
@@ -57,9 +61,12 @@
 
         this.update = function(listaAste) {
 
-
-            listaAste.array.forEach(element => {
-                //codice di creazione della tabella
+            listContainerBody.innerHTML = "";
+            listaAste.forEach(element => {
+                
+                var row = createTableRow(element);
+                this.listContainerBody.append(row);
+                
             });
 
             //rendo visibile la tabella alla fine della creazione
@@ -76,7 +83,7 @@
 
         this.reset = function() {
             //Nascondo l'intera tabella
-            this.listcontainer.style.visibility = "hidden";
+            this.listContainer.style.visibility = "hidden";
         }
 
         this.show = function() {
@@ -102,9 +109,11 @@
 
         this.update = function(listaAste) {
 
-
-            listaAste.array.forEach(element => {
+            listContainerBody.innerHTML = "";
+            listaAste.forEach(element => {
                 //codice di creazione della tabella
+                var row = createTableRow(element);
+                this.listContainerBody.append(row);
             });
 
             //rendo visibile la tabella alla fine della creazione
@@ -123,7 +132,7 @@
 
         this.reset = function() {
             //Nascondo l'intera tabella
-            this.listcontainer.style.visibility = "hidden";
+            this.listContainer.style.visibility = "hidden";
         }
 
         this.show = function() {
@@ -186,7 +195,7 @@
 
         //Crea tutti i componenti
         this.start = function() {
-
+            console.log("PO START");
             welcomeMessage = new WelcomeMessage(
                 sessionStorage.getItem("username"),
                 document.getElementById("id_username")
@@ -198,6 +207,7 @@
                 document.getElementById("av-auc-list-container"),
                 document.getElementById("av-auc-list-body")
             );
+            asteDisponibili.show();
 
             mieAsteAperte = new MieAsteAperte(
                 alertContainer,
@@ -206,11 +216,11 @@
             );
 
             //Forse non serve
-            mieAsteChiuse = new MieAsteChiuse(
+            /*mieAsteChiuse = new MieAsteChiuse(
                 alertContainer,
                 document.getElementById("my-closed-auc-list-container"),
                 document.getElementById("my-closed-auc-list-body")
-            );
+            );*/
 
             //TODO
             dettaglioAsta = new DettaglioAsta();
@@ -220,13 +230,13 @@
 
         //Nasconde tutti i componenti
         this.reset = function() {
-
+            console.log("PO RESET");
             alertContainer.textContent = "";
 
-            asteDisopnibili.reset();
+            asteDisponibili.reset();
             mieAsteAperte.reset();
             //forse non serve
-            mieAsteChiuse.reset();
+            //mieAsteChiuse.reset();
             dettaglioAsta.reset();
             nuovaAsta.reset();
 
