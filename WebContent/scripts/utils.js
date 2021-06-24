@@ -55,7 +55,7 @@ function createTableRow(rowData)
     auc_owner.classList.add("auc-owner");*/
 
     // Title
-    auc_title.innerHTML = "<a class='detail-link'><span class ='auction-name' id='auction_titolo'>" + rowData.article.nome + "</span></a>";
+    auc_title.innerHTML = "<span class='detail-link'><span class ='auction-name' id='auction_titolo'>" + rowData.article.nome + "</span></span >";
     auc_title.classList.add("auc-title");
 
     var second_td = document.createElement("td");
@@ -66,7 +66,7 @@ function createTableRow(rowData)
     // Img
     auc_list_image.classList.add("auc-list-image");
 
-    var img = "<img class='auction-img' id='auction_immagine' src = ''>";
+    var img = "<img class='auction-img' id='auction_immagine' src = 'http://localhost:8080/TIW-2021/GetImage?image="+rowData.article.immagine+"'>";
 
     auc_list_image.innerHTML = img;
 
@@ -79,15 +79,24 @@ function createTableRow(rowData)
 
 }
 
-/*
-<td class="auc-list-image">
-                            <img class="auction-img" id="auction_immagine">
-                        </td>
-<td>
-    <div class="auc-title"><a class="detail-link"><span class ="auction-name" id="auction_titolo"></span></a></div>
-    <div class="auc-owner" id="auction_proprietario"></div>
-    <div class="pricebox">
-        <div class="auc-price">Offerta corrente: <span id="auction_prezzo_start"></span>&euro;</div>
-        <div class="auc-timer">Scadenza: <span id="auction_scadenza"></span></div>
-    </div>
-</td>*/
+function getImage(path)
+{
+    var self = this;
+    makeCall("GET", "GetImage?image="+path, null,
+        function(req) {
+            if (req.readyState == XMLHttpRequest.DONE) {
+                var message = req.responseText;
+                if (req.status == 200) {
+                    var image = JSON.parse(req.responseText);
+                    
+                    return image;
+                }
+            } else {
+                console.log("IMAGE ERROR");
+            }
+        }
+    );
+}
+
+
+

@@ -40,8 +40,8 @@ public class GetMyAuctionJS extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//Già controllato il login dell'utente con filtro
-		//Già controllate scadenza aste con filtro
+		//Giï¿½ controllato il login dell'utente con filtro
+		//Giï¿½ controllate scadenza aste con filtro
 		
 		HttpSession session = request.getSession();
 			
@@ -74,6 +74,7 @@ public class GetMyAuctionJS extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		
 		String auctionsOpenJS = new Gson().toJson(auctionsOpen);
 		String auctionsClosedJS = new Gson().toJson(auctionsClosed);
 		
@@ -81,9 +82,10 @@ public class GetMyAuctionJS extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		response.getWriter().write(auctionsOpenJS);
-		response.getWriter().write(auctionsClosedJS);
+		// TODO: Rendere parametrico e ritornare solo la lista di ate giusta (parametro tramite get probabilmente
+		//response.getWriter().write(auctionsClosedJS);
 		
-		//TODO: aggiungere messaggio su mieAste.html quando la lista è vuota
+		//TODO: aggiungere messaggio su mieAste.html quando la lista ï¿½ vuota
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

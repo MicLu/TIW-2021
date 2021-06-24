@@ -62,7 +62,7 @@ public class GetImage extends HttpServlet {
 		
 		//TODO: test what happens  if you change inline by  attachment
 		response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
-																									
+		Debugger.log(file.toPath().toString());																							
 		// copy file to output stream
 		Files.copy(file.toPath(), response.getOutputStream());
 	}
