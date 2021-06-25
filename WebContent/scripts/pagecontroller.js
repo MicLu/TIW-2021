@@ -113,6 +113,14 @@
                 var row = createTableRow(element);
                 this.listContainerBody.append(row);
 
+                var id = "auction_titolo" + element.idAsta;
+                var link_dettalio_asta = document.getElementById(id);
+
+                link_dettalio_asta.addEventListener("click", () => {
+                    pageOrchestrator.reset();
+                    dettaglioAsta.show(element.idAsta);
+                });
+
             });
 
             document.getElementById("page-title").innerHTML = "<h1>Aste disponibili</h1>";
@@ -239,17 +247,19 @@
 
         this.show = function(id) {
             var self = this;
-            makeCall("GET", "GetArticleDetailsJS?id=" + id, null,
+            makeCall("GET", "GetArticleDetailsJS?auctionId=" + id, null,
                 function(req) {
                     if (req.readyState == XMLHttpRequest.DONE) {
                         var message = req.responseText;
                         if (req.status == 200) {
-                            var listaAste = JSON.parse(req.responseText);
-                            if (listaAste.length == 0) {
+                            var asta = JSON.parse(req.responseText);
+                            //Asta da visualizzare
+                            asta = asta[0];
+                            if (asta.length == 0) {
                                 self.alertContainer.textContent = "Nessuna asta disponibile";
                                 return;
                             }
-                            self.update(listaAste);
+                            self.update(asta);
                         }
                     } else {
                         self.alertContainer.textContent = message;

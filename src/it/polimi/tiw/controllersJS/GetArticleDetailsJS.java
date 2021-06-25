@@ -3,6 +3,7 @@ package it.polimi.tiw.controllersJS;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -111,25 +112,33 @@ public class GetArticleDetailsJS extends HttpServlet {
 //		ServletContext servletContext = getServletContext();
 //		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
-		String auctionJS = new Gson().toJson(auction);
-		String auctionOwnerJS = new Gson().toJson(user);
-		String offersJS = new Gson().toJson(offers);
+		List<Object> myResponse = new ArrayList<>();
+		
+		myResponse.add(auction);
+		myResponse.add(user);
+		myResponse.add(offers);
+		//String auctionJS = new Gson().toJson(auction);
+		//String auctionOwnerJS = new Gson().toJson(user);
+		//String offersJS = new Gson().toJson(offers);
 		
 		Debugger.log("Offerte per questo articolo: " + offers.size());
 		
-		String logged_usernameJS = new Gson().toJson(loggedUser.getUsername());
-		String auctionIdJS = new Gson().toJson(auctionId);
-		String minimJS = new Gson().toJson(minim);
+		myResponse.add(loggedUser.getUsername());
+		myResponse.add(auctionId);
+		myResponse.add(minim);
+		//String logged_usernameJS = new Gson().toJson(loggedUser.getUsername());
+		//String auctionIdJS = new Gson().toJson(auctionId);
+		//String minimJS = new Gson().toJson(minim);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		response.getWriter().write(auctionJS);
-		response.getWriter().write(auctionOwnerJS);
-		response.getWriter().write(offersJS);
-		response.getWriter().write(logged_usernameJS);
-		response.getWriter().write(auctionIdJS);
-		response.getWriter().write(minimJS);
+		//response.getWriter().write(auctionJS);
+		//response.getWriter().write(auctionOwnerJS);
+		//response.getWriter().write(offersJS);
+		//response.getWriter().write(logged_usernameJS);
+		//response.getWriter().write(auctionIdJS);
+		//response.getWriter().write(minimJS);
 		
 		//Send auctionWinner'infos to template engine
 		User auctionWinner = null;
@@ -147,9 +156,11 @@ public class GetArticleDetailsJS extends HttpServlet {
 				
 			}
 			
-			String auctionWinnerJS = new Gson().toJson(auctionWinner);
+			myResponse.add(auctionWinner);
+			//String auctionWinnerJS = new Gson().toJson(auctionWinner);
 
-			response.getWriter().write(auctionWinnerJS);
+			String myResponseJS = new Gson().toJson(myResponse);
+			response.getWriter().write(myResponseJS);
 		}
 		
 		
