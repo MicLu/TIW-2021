@@ -112,7 +112,7 @@ public class GetArticleDetailsJS extends HttpServlet {
 //		ServletContext servletContext = getServletContext();
 //		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
-		List<Object> myResponse = new ArrayList<>();
+		List<Object> myResponse = new ArrayList<Object>();
 		
 		myResponse.add(auction);
 		myResponse.add(user);
@@ -159,11 +159,14 @@ public class GetArticleDetailsJS extends HttpServlet {
 			myResponse.add(auctionWinner);
 			//String auctionWinnerJS = new Gson().toJson(auctionWinner);
 
-			String myResponseJS = new Gson().toJson(myResponse);
-			response.getWriter().write(myResponseJS);
+			
 		}
 		
+		String myResponseJS = new Gson().toJson(myResponse);
 		
+		Debugger.log(myResponseJS);
+		
+		response.getWriter().write(myResponseJS);
 		
 		
 	}

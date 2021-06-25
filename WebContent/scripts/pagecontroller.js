@@ -236,8 +236,9 @@
 
     }
 
-    function DettaglioAsta(detContainer) {
+    function DettaglioAsta(alertContainer, detContainer) {
 
+        this.alertContainer = alertContainer;
         this.detContainer = detContainer;
         //TODO
         this.reset = function() {
@@ -334,6 +335,7 @@
 
             //TODO
             dettaglioAsta = new DettaglioAsta(
+                alertContainer,
                 document.getElementById("dettaglio")
             );
             nuovaAsta = new NuovaAsta(
