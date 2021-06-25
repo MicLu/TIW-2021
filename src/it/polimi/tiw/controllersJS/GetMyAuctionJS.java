@@ -75,17 +75,19 @@ public class GetMyAuctionJS extends HttpServlet {
 		}
 		
 		
-		String auctionsOpenJS = new Gson().toJson(auctionsOpen);
-		String auctionsClosedJS = new Gson().toJson(auctionsClosed);
+		List<List<Auction>> myAuction = new ArrayList<List<Auction>>();
+		
+		myAuction.add(auctionsOpen);
+		myAuction.add(auctionsClosed);
+		
+		String myAuctionJS = new Gson().toJson(myAuction);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		response.getWriter().write(auctionsOpenJS);
-		// TODO: Rendere parametrico e ritornare solo la lista di ate giusta (parametro tramite get probabilmente
-		//response.getWriter().write(auctionsClosedJS);
+		response.getWriter().write(myAuctionJS);
 		
-		//TODO: aggiungere messaggio su mieAste.html quando la lista ï¿½ vuota
+		//TODO: aggiungere messaggio su mieAste.html quando la lista è vuota
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

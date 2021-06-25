@@ -25,39 +25,37 @@
     btn_my_auc.addEventListener("click", () => {
         pageOrchestrator.reset();
         mieAsteAperte.show();
-        //mieAsteChiuse.show();
+        mieAsteChiuse.show();
     });
 
     var btn_new_auc = document.getElementById("new-auc-btn");
     btn_new_auc.addEventListener("click", () => {
         var form = document.getElementById("new-auc-form");
 
-        if (form.checkValidity())
-        {
+        if (form.checkValidity()) {
             makeCall("POST", "CreateAuctionJS", form,
-            function(req){
-                if (req.readyState == XMLHttpRequest.DONE) {
-                    var message = req.responseText;
-                    switch (req.status) {
-                        case 200:
-                            pageOrchestrator.reset();
-                            mieAsteAperte.show();
-                            break;
-                        case 400: // bad request
-                            document.getElementById("errorMsg").textContent = message;
-                            break;
-                        case 401: // unauthorized
-                            document.getElementById("errorMsg").textContent = message;
-                            break;
-                        case 500: // server error
-                            document.getElementById("errorMsg").textContent = message;
-                            break;
+                function(req) {
+                    if (req.readyState == XMLHttpRequest.DONE) {
+                        var message = req.responseText;
+                        switch (req.status) {
+                            case 200:
+                                pageOrchestrator.reset();
+                                mieAsteAperte.show();
+                                break;
+                            case 400: // bad request
+                                document.getElementById("errorMsg").textContent = message;
+                                break;
+                            case 401: // unauthorized
+                                document.getElementById("errorMsg").textContent = message;
+                                break;
+                            case 500: // server error
+                                document.getElementById("errorMsg").textContent = message;
+                                break;
+                        }
+                    } else {
+                        form.reportValidity();
                     }
-                } else 
-                {
-                    form.reportValidity();
-                }
-            });
+                });
         }
     })
 
@@ -79,7 +77,7 @@
 
         this.reset = function() {
             //Nascondo l'intera tabella
-            this.listContainer.style.visibility = "hidden";
+            this.listContainer.style.display = "none";
         }
 
         this.show = function() {
@@ -111,15 +109,15 @@
 
             listContainerBody.innerHTML = "";
             listaAste.forEach(element => {
-                
+
                 var row = createTableRow(element);
                 this.listContainerBody.append(row);
-                
+
             });
 
             document.getElementById("page-title").innerHTML = "<h1>Aste disponibili</h1>";
             //rendo visibile la tabella alla fine della creazione
-            this.listContainerBody.style.visibility = "visible";
+            this.listContainer.style.display = "block";
         }
 
     }
@@ -132,7 +130,7 @@
 
         this.reset = function() {
             //Nascondo l'intera tabella
-            this.listContainer.style.visibility = "hidden";
+            this.listContainer.style.display = "none";
         }
 
         this.show = function() {
@@ -144,6 +142,8 @@
                         var message = req.responseText;
                         if (req.status == 200) {
                             var listaAste = JSON.parse(req.responseText);
+                            //Aste aperte
+                            listaAste = listaAste[0];
                             if (listaAste.length == 0) {
                                 console.log("NON CI SONO MIE ASTE APERTE");
                                 self.alertContainer.textContent = "Nessuna asta disponibile";
@@ -161,7 +161,7 @@
 
         this.update = function(listaAste) {
 
-            console.log("MIE ASTE APERTE "+listaAste);
+            console.log("MIE ASTE APERTE " + listaAste);
             listContainerBody.innerHTML = "";
             listaAste.forEach(element => {
                 //codice di creazione della tabella
@@ -169,10 +169,9 @@
                 this.listContainerBody.append(row);
             });
 
-
             document.getElementById("page-title").innerHTML = "<h1>Le mie aste</h1>";
             //rendo visibile la tabella alla fine della creazione
-            this.listContainerBody.style.visibility = "visible";
+            this.listContainer.style.display = "block";
         }
 
     }
@@ -187,17 +186,19 @@
 
         this.reset = function() {
             //Nascondo l'intera tabella
-            this.listContainer.style.visibility = "hidden";
+            this.listContainer.style.display = "none";
         }
 
         this.show = function() {
             var self = this;
-            makeCall("GET", "GetAvailableAuctionJS", null,
+            makeCall("GET", "GetMyAuctionJS", null,
                 function(req) {
                     if (req.readyState == XMLHttpRequest.DONE) {
                         var message = req.responseText;
                         if (req.status == 200) {
                             var listaAste = JSON.parse(req.responseText);
+                            //Aste chiuse
+                            listaAste = listaAste[1];
                             if (listaAste.length == 0) {
                                 self.alertContainer.textContent = "Nessuna asta disponibile";
                                 return;
@@ -212,14 +213,17 @@
         };
 
         this.update = function(listaAste) {
-            //codice di creazione della tabella
 
-            listaAste.array.forEach(element => {
-                
+            console.log("MIE ASTE CHIUSUE " + listaAste);
+            listContainerBody.innerHTML = "";
+            listaAste.forEach(element => {
+                //codice di creazione della tabella
+                var row = createTableRow(element);
+                this.listContainerBody.append(row);
             });
 
             //rendo visibile la tabella alla fine della creazione
-            this.listContainerBody.style.visibility = "visible";
+            this.listContainer.style.display = "block";
         }
 
     }
@@ -230,13 +234,12 @@
         //TODO
         this.reset = function() {
             //Nascondo l'intera tabella
-            this.detContainer.style.visibility = "hidden";
+            this.detContainer.style.display = "none";
         }
 
-        this.show = function(id)
-        {
+        this.show = function(id) {
             var self = this;
-            makeCall("GET", "GetArticleDetailsJS?id="+id, null,
+            makeCall("GET", "GetArticleDetailsJS?id=" + id, null,
                 function(req) {
                     if (req.readyState == XMLHttpRequest.DONE) {
                         var message = req.responseText;
@@ -255,8 +258,7 @@
             );
         }
 
-        this.update = function(product)
-        {
+        this.update = function(product) {
             console.log(product);
         }
 
@@ -267,17 +269,16 @@
     function NuovaAsta(formContainer) {
 
         this.formContainer = formContainer
-        //TODO
+            //TODO
         this.reset = function() {
             //Nascondo l'intera tabella
-            this.formContainer.style.visibility = "hidden";
+            this.formContainer.style.display = "none";
         }
 
-        this.show = function()
-        {
+        this.show = function() {
 
             document.getElementById("page-title").innerHTML = "<h1>Nuova asta</h1>";
-            this.formContainer.style.visibility = "visible";
+            this.formContainer.style.display = "block";
 
         }
 
@@ -287,8 +288,7 @@
 
         var alertContainer = document.getElementById("id_alert");
 
-        this.test = function()
-        {
+        this.test = function() {
             alert("FUNZIONA");
         }
 
@@ -309,7 +309,7 @@
 
             mieAsteAperte = new MieAsteAperte(
                 alertContainer,
-                document.getElementById("my-open-auc-list-container"),
+                document.getElementById("mie-aste"),
                 document.getElementById("my-open-auc-list-body")
             );
 
@@ -318,7 +318,7 @@
             //Forse non serve
             mieAsteChiuse = new MieAsteChiuse(
                 alertContainer,
-                document.getElementById("my-closed-auc-list-container"),
+                document.getElementById("mie-aste"),
                 document.getElementById("my-closed-auc-list-body")
             );
 
@@ -341,7 +341,6 @@
 
             asteDisponibili.reset();
             mieAsteAperte.reset();
-            //forse non serve
             mieAsteChiuse.reset();
             dettaglioAsta.reset();
             nuovaAsta.reset();

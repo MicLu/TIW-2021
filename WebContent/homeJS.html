@@ -43,12 +43,12 @@
     <div id="page-container">
 
         <div id="sidebar-left">
-            
-                <div id = "btn-vendo" class="big-link-btn">Vendo</div>
+
+            <div id="btn-vendo" class="big-link-btn">Vendo</div>
             <br>
-            
-                <div class="big-link-btn" id="my-auc-btn">Le mie aste</div>
-            
+
+            <div class="big-link-btn" id="my-auc-btn">Le mie aste</div>
+
         </div>
 
         <div id="inner-container">
@@ -60,7 +60,7 @@
             <!-- Aste disponibili per l'acquisto -->
             <table class="auction-list" id="av-auc-list-container">
 
-                
+
 
                 <tbody id="av-auc-list-body">
 
@@ -83,104 +83,110 @@
 
             </table>
 
-            <!-- Mie aste aperte -->
-            <table class="auction-list" id="my-open-auc-list-container">
+            <div id="mie-aste">
 
-                
-                <tbody id="my-open-auc-list-body">
+                <h1>Aste aperte</h1>
+                <!-- Mie aste aperte -->
+                <table class="auction-list" id="my-open-auc-list-container">
 
-                    <tr>
-                        <td class="auc-list-image">
-                            <img class="auction-img" id="auction_immagine">
-                        </td>
 
-                        <td>
-                            <div class="auc-title"><a class="detail-link"><span class ="auction-name" id="auction_titolo"></span></a></div>
-                            <div class="auc-owner" id="auction_proprietario"></div>
-                            <div class="pricebox">
-                                <div class="auc-price">Offerta corrente: <span id="auction_prezzo_start"></span>&euro;</div>
-                                <div class="auc-timer">Scadenza: <span id="auction_scadenza"></span></div>
-                            </div>
-                        </td>
-                    </tr>
+                    <tbody id="my-open-auc-list-body">
 
-                </tbody>
+                        <tr>
+                            <td class="auc-list-image">
+                                <img class="auction-img" id="auction_immagine">
+                            </td>
 
-            </table>
+                            <td>
+                                <div class="auc-title"><a class="detail-link"><span class ="auction-name" id="auction_titolo"></span></a></div>
+                                <div class="auc-owner" id="auction_proprietario"></div>
+                                <div class="pricebox">
+                                    <div class="auc-price">Offerta corrente: <span id="auction_prezzo_start"></span>&euro;</div>
+                                    <div class="auc-timer">Scadenza: <span id="auction_scadenza"></span></div>
+                                </div>
+                            </td>
+                        </tr>
 
-            <!-- Mie aste chiuse -->
-            <table class="auction-list" id="my-closed-auc-list-container">
+                    </tbody>
 
-                
-                <tbody id="my-closed-auc-list-body">
+                </table>
 
-                    <tr>
-                        <td class="auc-list-image">
-                            <img class="auction-img" id="auction_immagine">
-                        </td>
+                <h1>Aste chiuse</h1>
+                <!-- Mie aste chiuse -->
+                <table class="auction-list" id="my-closed-auc-list-container">
 
-                        <td>
-                            <div class="auc-title"><a class="detail-link"><span class ="auction-name" id="auction_titolo"></span></a></div>
-                            <div class="auc-owner" id="auction_proprietario"></div>
-                            <div class="pricebox">
-                                <div class="auc-price">Offerta corrente: <span id="auction_prezzo_start"></span>&euro;</div>
-                                <div class="auc-timer">Scadenza: <span id="auction_scadenza"></span></div>
-                            </div>
-                        </td>
-                    </tr>
 
-                </tbody>
+                    <tbody id="my-closed-auc-list-body">
 
-            </table>
+                        <tr>
+                            <td class="auc-list-image">
+                                <img class="auction-img" id="auction_immagine">
+                            </td>
+
+                            <td>
+                                <div class="auc-title"><a class="detail-link"><span class ="auction-name" id="auction_titolo"></span></a></div>
+                                <div class="auc-owner" id="auction_proprietario"></div>
+                                <div class="pricebox">
+                                    <div class="auc-price">Offerta corrente: <span id="auction_prezzo_start"></span>&euro;</div>
+                                    <div class="auc-timer">Scadenza: <span id="auction_scadenza"></span></div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
             <!--Dettaglio asta-->
 
-            <div id = "dettaglio">
+            <div id="dettaglio">
                 <div class="dettaglio">
-                    <div id = "prod-img">
+                    <div id="prod-img">
                         <img class="product-image" th:src="@{/GetImage(image=${auction.image})}">
                     </div>
                     <div class="product-content">
                         <div class="product-name">
-                            <span id = "prod-name">Nome del prodotto</span>
+                            <span id="prod-name">Nome del prodotto</span>
                             <hr class="divider">
                         </div>
                         <div class="product-content">
-                            <div>Venduto da: <span id = "auc-own-name">Nome Cognome</span></div>
-                            <div>Scadenza: <span id = auc-exp>Scadenza</span></div>
-                            <div>Descrizione: <span id = "auc-desc">Descrizione</span></div>
+                            <div>Venduto da: <span id="auc-own-name">Nome Cognome</span></div>
+                            <div>Scadenza: <span id=a uc-exp>Scadenza</span></div>
+                            <div>Descrizione: <span id="auc-desc">Descrizione</span></div>
                             <table>
                                 <tr>
                                     <td>Offerta corrente</td>
-                                    <td><span id = "auc-curr">0,00</span>&euro;</td>
+                                    <td><span id="auc-curr">0,00</span>&euro;</td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <form id = "makeoffer">
+                                    <form id="makeoffer">
                                         <td>
                                             <input name="valore">
-    
-                                            <p>Minimo: <span id = "min-offer">0,00</span>&euro;</p>
-    
+
+                                            <p>Minimo: <span id="min-offer">0,00</span>&euro;</p>
+
                                             <input name="asta" style="display:none;" th:value="${auctionId}">
                                             <input name="min" style="display:none;" th:value="${auction.rialzo_min}">
                                             <input name="offerente" style="display:none;" th:value="${logged_username}">
                                             <input name="corrente" style="display:none;" th:value="${auction.prezzo_start}">
                                         </td>
-                                        
+
                                     </form>
                                     <td>
-                                        <input id = "offer-btn" type="submit" value="Offri">
+                                        <input id="offer-btn" type="submit" value="Offri">
                                     </td>
                                 </tr>
                             </table>
-                            <div id = "owner-zone">
-                            <div class="big-link-btn" th:if="${auction.auctionStatus.name() == 'SCADUTA' and auctionOwner.username == session.user.username}">
-                                <a th:href="@{/CloseAuction(auctionId=${auction.idAsta})}">
+                            <div id="owner-zone">
+                                <div class="big-link-btn" th:if="${auction.auctionStatus.name() == 'SCADUTA' and auctionOwner.username == session.user.username}">
+                                    <a th:href="@{/CloseAuction(auctionId=${auction.idAsta})}">
                                         Chiudi asta
                                     </a>
-                            </div>
+                                </div>
                             </div>
 
                             <!-- TODO: sistema anche queste cose -->
@@ -205,55 +211,55 @@
                                 </div>
                             </table>
                         </div>
-    
+
                     </div>
                 </div>
             </div>
 
             <!--Nuova asta-->
-            <div id = "form-new-auc">
+            <div id="form-new-auc">
                 <center>
-                    <form id = "new-auc-form" enctype="multipart/form-data">
+                    <form id="new-auc-form" enctype="multipart/form-data">
                         <table>
-                            
+
                             <tr>
                                 <td>Titolo</td>
                                 <td>Immagine</td>
                             </tr>
-                            
+
                             <tr>
-                                <td><input type = "text" name = "nomeArticolo"></td>
-                                <td><input type = "file" accept="image/png, image/jpeg" name = "immagineArticolo"></td>
+                                <td><input type="text" name="nomeArticolo"></td>
+                                <td><input type="file" accept="image/png, image/jpeg" name="immagineArticolo"></td>
                             </tr>
-                            
+
                             <tr>
                                 <td>Descrizione</td>
                             </tr>
-                            
+
                             <tr>
-                                <td><textarea type = "text-area" name = "descrizioneArticolo"></textarea></td>
+                                <td><textarea type="text-area" name="descrizioneArticolo"></textarea></td>
                             </tr>
-                            
+
                         </table>
-                        
+
                         <table>
                             <tr>
                                 <td>Prezzo di partenza</td>
                                 <td>Rialzo minimo</td>
                                 <td>Scadenza asta</td>
                             </tr>
-                            
+
                             <tr>
-                                <td><input type = "number" name = "prezzo_startAsta"></td>
-                                <td><input type = "number" name = "rialzo_minAsta"></td>
-                                <td><input type = "datetime-local" name = "scadenzaAsta"></td>
+                                <td><input type="number" name="prezzo_startAsta"></td>
+                                <td><input type="number" name="rialzo_minAsta"></td>
+                                <td><input type="datetime-local" name="scadenzaAsta"></td>
                             </tr>
                         </table>
-                        
-                        
+
+
                     </form>
-                    <input id = "new-auc-btn" type = "submit" value = "Crea Asta">
-                    </center>
+                    <input id="new-auc-btn" type="submit" value="Crea Asta">
+                </center>
             </div>
 
 
