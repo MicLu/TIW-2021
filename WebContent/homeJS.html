@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" media="all" href="css/style.css">
+    <link rel="stylesheet" type="text/css" media="all" href="css/dettaglio.css">
     <!--<script src="scripts/loginManagement.js" defer></script>-->
     <script src="scripts/pagecontroller.js" defer></script>
     <script src="scripts/utils.js" defer></script>
@@ -144,7 +145,7 @@
             <div id="dettaglio">
                 <div class="dettaglio">
                     <div id="prod-img">
-                        <img class="product-image" th:src="@{/GetImage(image=${auction.image})}">
+                        
                     </div>
                     <div class="product-content">
                         <div class="product-name">
@@ -153,7 +154,7 @@
                         </div>
                         <div class="product-content">
                             <div>Venduto da: <span id="auc-own-name">Nome Cognome</span></div>
-                            <div>Scadenza: <span id=a uc-exp>Scadenza</span></div>
+                            <div>Scadenza: <span id="auc-exp">Scadenza</span></div>
                             <div>Descrizione: <span id="auc-desc">Descrizione</span></div>
                             <table>
                                 <tr>

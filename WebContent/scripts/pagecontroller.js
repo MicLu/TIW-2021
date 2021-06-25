@@ -271,6 +271,27 @@
 
         this.update = function(product) {
             console.log(product);
+
+            document.getElementById("auc-own-name").innerHTML = product.proprietario;
+            document.getElementById("auc-exp").innerHTML = product.scadenza;
+            document.getElementById("auc-desc").innerHTML = product.article.descrizione;
+            document.getElementById("auc-curr").innerHTML = product.prezzo_start;
+            document.getElementById("min-offer").innerHTML = product.rialzo_min;
+            document.getElementById("auc-exp").innerHTML = product.scadenza;
+
+            var imgReqUrl = "http://localhost:8080/TIW-2021/GetImage?image=" + product.article.immagine;
+
+            var img = document.createElement("img");
+            img.src = imgReqUrl;
+            img.classList.add("product-image");
+
+            document.getElementById("prod-img").append(img);
+            if (product.proprietario != sessionStorage.getItem("username"))
+            {
+                document.getElementById("owner-zone").style.display = "none";
+            }
+            
+            detContainer.style.display = "block";
         }
 
 
