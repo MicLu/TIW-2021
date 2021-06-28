@@ -193,10 +193,10 @@
                             <!-- TODO: sistema anche queste cose -->
                             <table id="auc-result">
                                 <!-- Se non c'è un vincitore mostra "nessuna offerta ricevuta" -->
-                                <div th:if="${#lists.isEmpty(offers)}">
-                                    Asta scaduta senza offerte
+                                <div id = "no-winner">
+                                    
                                 </div>
-                                <div th:if="${not #lists.isEmpty(offers)}">
+                                <div>
                                     <th>Asta vinta da:</th>
                                     <tr>
                                         <td>

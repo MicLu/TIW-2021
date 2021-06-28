@@ -33,7 +33,7 @@ public class LoginJS extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		//TODO: Già controllate scadenza aste con filtro
+		//TODO: Giï¿½ controllate scadenza aste con filtro
 	
 		String username = null;
 		String password = null;
@@ -55,7 +55,7 @@ public class LoginJS extends HttpServlet {
 			}
 		} catch (Exception e) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response.getWriter().println("Errore di autenticazione");
+			response.getWriter().println("Errore Di autenticazione");
 		}
 		
 		
@@ -66,7 +66,7 @@ public class LoginJS extends HttpServlet {
 			user = userDAO.checkUserCredential(username, password);
 		} catch (SQLException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			response.getWriter().println("Non è possibile controllare le credenziali");
+			response.getWriter().println("Non ï¿½ possibile controllare le credenziali");
 			return;
 		}
 		

@@ -336,6 +336,8 @@
             var offerList = product[2];
             var min_offer = product[5];
 
+            console.log("ASTA " + auction);
+
             document.getElementById("prod-name").innerHTML = auction.article.nome;
             document.getElementById("auc-own-name").innerHTML = auction.proprietario;
             document.getElementById("auc-exp").innerHTML = auction.scadenza;
@@ -371,6 +373,7 @@
             var img = document.createElement("img");
             img.src = imgReqUrl;
             img.classList.add("product-image");
+            
             document.getElementById("prod-img").append(img);
 
 

@@ -63,14 +63,14 @@ public class CloseAuctionJS extends HttpServlet {
 				Debugger.log("Chiusa asta con id " + auctionId);
 			}else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response.getWriter().print("Non è possibile chiudere questa asta");
+				//response.getWriter().print("Non ï¿½ possibile chiudere questa asta");
 				return;
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			response.getWriter().print("Non è possibile chiudere questa asta");
+			//response.getWriter().print("Non ï¿½ possibile chiudere questa ascdcdvcdvta");
 			return;
 			
 		}
