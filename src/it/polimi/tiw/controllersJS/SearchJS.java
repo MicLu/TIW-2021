@@ -65,8 +65,7 @@ public class SearchJS extends HttpServlet {
 		
 		if(auctions.isEmpty()) {
 			Debugger.log("Nessuna asta corrispondente alla parola cercata");
-			response.getWriter().println("Nessuna asta corrispondente alla parola cercata");
-			//ctx.setVariable("searchedKeyword", request.getParameter("keywordSearch"));
+			
 		}
 		
 		String auctionsJS = new Gson().toJson(auctions);

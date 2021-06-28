@@ -80,6 +80,7 @@
                         if (listaAste.length == 0) {
                             console.log("Lista vuota");
                             alertContainer.textContent = "Nessuna asta trovata";
+                            asteDisponibili.reset();
                             return;
                         }
                         asteDisponibili.update(listaAste);
@@ -343,7 +344,7 @@
             document.getElementById("min-offer").innerHTML = min_offer;
 
             //document.getElementById("auc-btn").href = "/CloseAuctionJS?auctionId=" + auction.idAsta;
-            document.getElementById("auc-btn").addEventListener("click", (e) => {
+            document.getElementById("close-auc-btn").addEventListener("click", (e) => {
                 makeCall("POST", "CloseAuctionJS", auction.idAsta,
                     function(req) {
                         if (req.readyState == XMLHttpRequest.DONE) {
