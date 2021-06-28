@@ -30,10 +30,10 @@
                 </center>
             </div>
             <div id="searchbar">
-                <form action="#">
+                <form action="#" id="search-form">
                     <input class="searchbar" style="width: 80%;" type="text" name="keywordSearch">
-                    <input class="searchbtn" type="submit" value="Cerca">
                 </form>
+                <input class="searchbtn" id="search-btn" type="submit" value="Cerca">
             </div>
             <div id="id_alert" class="errorMessage"></div>
         </div>
@@ -145,7 +145,7 @@
             <div id="dettaglio">
                 <div class="dettaglio">
                     <div id="prod-img">
-                        
+
                     </div>
                     <div class="product-content">
                         <div class="product-name">
@@ -184,14 +184,14 @@
                             </table>
                             <div id="owner-zone">
                                 <div class="big-link-btn" th:if="${auction.auctionStatus.name() == 'SCADUTA' and auctionOwner.username == session.user.username}">
-                                    <a th:href="@{/CloseAuction(auctionId=${auction.idAsta})}">
+                                    <a href="#" id="close-auc-btn">
                                         Chiudi asta
                                     </a>
                                 </div>
                             </div>
 
                             <!-- TODO: sistema anche queste cose -->
-                            <table th:if="${auction.auctionStatus.name() == 'CHIUSA'}">
+                            <table id="auc-result">
                                 <!-- Se non c'è un vincitore mostra "nessuna offerta ricevuta" -->
                                 <div th:if="${#lists.isEmpty(offers)}">
                                     Asta scaduta senza offerte
@@ -200,14 +200,14 @@
                                     <th>Asta vinta da:</th>
                                     <tr>
                                         <td>
-                                            <span th:text=${auctionWinner.nome}>NomeVincitore</span> <span th:text=${auctionWinner.cognome}>CognomeVincitore</span>
+                                            <span id="auc-winner-name">NomeVincitore</span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Prezzo finale <span th:text="${auction.prezzo_start}"></span> </td>
+                                        <td>Prezzo finale <span id="auc-final-price"></span> </td>
                                     </tr>
                                     <tr>
-                                        <td>Indirizzo vincitore: <span th:text=${auctionWinner.indirizzo}></span></td>
+                                        <td>Indirizzo vincitore: <span id="auc-winner-address"></span></td>
                                     </tr>
                                 </div>
                             </table>
