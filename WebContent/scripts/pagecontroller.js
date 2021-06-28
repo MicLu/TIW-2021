@@ -1,7 +1,7 @@
 (function() {
 
     //Componenti pagina
-    var asteDisponibili, mieAsteAperte, mieAsteChiuse, dettaglioAsta, nuovaAsta,
+    var asteDisponibili, mieAsteAperte, mieAsteChiuse, dettaglioAsta, nuovaAsta, alertContainer,
         pageOrchestrator = new PageOrchestrator();
 
 
@@ -66,11 +66,11 @@
     });
 
     //var btn_searc = document.getElementById("search-btn");
-    var btn_searc = document.getElementById("search-form").lastElementChild;
+    var btn_searc = document.getElementById("search-btn");
     btn_searc.addEventListener("click", () => {
-        var search_form = document.getElementById("search-form");
+        var search_form = document.getElementById("searchbar");
 
-        makeCall("POST", "SearchJS", search_form,
+        makeCall("GET", "SearchJS?keywordSearch=" + search_form.value, null,
             function(req) {
                 if (req.readyState == XMLHttpRequest.DONE) {
                     var message = req.responseText;
@@ -79,14 +79,13 @@
                         console.log(listaAste);
                         if (listaAste.length == 0) {
                             console.log("Lista vuota");
-                            self.alertContainer.textContent = "Nessuna asta trovata";
+                            alertContainer.textContent = "Nessuna asta trovata";
                             return;
                         }
                         asteDisponibili.update(listaAste);
                     }
                 } else {
-                    //FIXME: alertContainer non inizializzato
-                    self.alertContainer.textContent = message;
+                    alertContainer.textContent = message;
                 }
             }
         );
@@ -423,7 +422,7 @@
 
     function PageOrchestrator() {
 
-        var alertContainer = document.getElementById("id_alert");
+        alertContainer = document.getElementById("id_alert");
 
         this.test = function() {
             alert("FUNZIONA");
