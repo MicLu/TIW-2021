@@ -31,6 +31,10 @@
   	<filter-name>ExpiredAuctionsFilter</filter-name>
   	<filter-class>it.polimi.tiw.filters.ExpiredAuctionsFilter</filter-class>
   </filter>
+  <filter>
+  	<filter-name>NoCacher</filter-name>
+  	<filter-class>it.polimi.tiw.filters.NoCacher</filter-class>
+  </filter>
   <filter-mapping>
   	<filter-name>CheckLoginFilter</filter-name>
   	<url-pattern>/CreateAuction</url-pattern>
@@ -48,6 +52,11 @@
   	<url-pattern>/GetMyAuction</url-pattern>
   	<url-pattern>/Login</url-pattern>
   	<url-pattern>/MakeOffer</url-pattern>
+  	<url-pattern>/GetAvailableAuctionJS</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>NoCacher</filter-name>
+  	<url-pattern>/LoginJS</url-pattern>
   </filter-mapping>
   
   <welcome-file-list>
