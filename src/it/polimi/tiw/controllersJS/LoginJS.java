@@ -78,9 +78,9 @@ public class LoginJS extends HttpServlet {
 		} else {
 			request.getSession().setAttribute("user", user);
 			response.setStatus(HttpServletResponse.SC_OK);
-			response.setContentType("application/json");
+			//response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().println(username);
+			response.getWriter().print(username);
 		}
 		
 	}

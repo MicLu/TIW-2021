@@ -95,3 +95,21 @@ function getImage(path) {
         }
     );
 }
+
+function createOfferRow(offer) {
+
+    var row = document.createElement("div");
+    row.classList.add("offerta")
+
+    var div1 = document.createElement("div");
+    div1.innerHTML = offer.offerenteCompleto; //nome offerente
+
+    var div2 = document.createElement("div");
+    div2.style = "text-align: end;";
+    div2.innerHTML = offer.valore + "€"; //offerta
+
+    row.append(div1);
+    row.append(div2);
+
+    return row;
+}

@@ -345,24 +345,30 @@
             document.getElementById("auc-curr").innerHTML = auction.prezzo_start;
             document.getElementById("min-offer").innerHTML = min_offer;
 
-            //document.getElementById("auc-btn").href = "/CloseAuctionJS?auctionId=" + auction.idAsta;
+            document.getElementById("close-auction-id").value = auction.idAsta;
+
             document.getElementById("close-auc-btn").addEventListener("click", (e) => {
-                makeCall("POST", "CloseAuctionJS", auction.idAsta,
+                var asta = document.getElementById("close-auction-form");
+                makeCall("POST", "CloseAuctionJS", asta,
                     function(req) {
                         if (req.readyState == XMLHttpRequest.DONE) {
                             var message = req.responseText;
                             if (req.status == 200) {
-                                var listaAste = JSON.parse(req.responseText);
+                                /*var listaAste = JSON.parse(req.responseText);
                                 console.log(listaAste);
                                 if (listaAste.length == 0) {
                                     console.log("Lista vuota");
-                                    self.alertContainer.textContent = "Nessuna asta disponibile";
+                                    alertContainer.textContent = "Nessuna asta disponibile";
                                     return;
                                 }
-                                self.update(listaAste);
+                                
+                                self.update(listaAste);*/
+                                pageOrchestrator.reset();
+                                mieAsteAperte.show();
+                                mieAsteChiuse.show();
                             }
                         } else {
-                            self.alertContainer.textContent = message;
+                            alertContainer.textContent = message;
                         }
                     }
                 );
@@ -373,25 +379,46 @@
             var img = document.createElement("img");
             img.src = imgReqUrl;
             img.classList.add("product-image");
-            
+
+            document.getElementById("prod-img").innerHTML = "";
             document.getElementById("prod-img").append(img);
 
+            //Box offerte
+            var offerBox = document.getElementById("box-offerte");
+            offerBox.innerHTML = "";
+            offerList.forEach(element => {
 
-            if (!(auction.proprietario === sessionStorage.getItem("username") &&
-                    auction.auctionStatus === 'SCADUTA')) {
+                var riga_offerta = createOfferRow(element);
+                offerBox.append(riga_offerta);
+
+            });
+
+            document.getElementById("no-winner").innerHTML = "";
+
+            if (auction.proprietario !== sessionStorage.getItem("username")) {
                 document.getElementById("owner-zone").style.display = "none";
+            } else {
+                document.getElementById("owner-zone").style.display = "block";
+                if (auction.auctionStatus === 'SCADUTA') {
+                    document.getElementById("close-auc-btn").style.display = "block";
+                } else {
+                    document.getElementById("close-auc-btn").style.display = "none";
+                }
             }
             if (auction.auctionStatus !== 'CHIUSA') {
                 document.getElementById("auc-result").style.display = "none";
             }
 
             if (auction.auctionStatus === 'CHIUSA') {
-                if (offerList == undefined) {
+                if (offerList == undefined || offerList.length == 0 || offerList == null) {
                     //Non ci sono offerte
-                    document.getElementById("auc-result").innerHTML = "Asta scaduta senza offerte";
+                    document.getElementById("auc-result").style.display = "none";
+                    document.getElementById("no-winner").innerHTML = "Asta scaduta senza offerte";
                 } else {
+                    document.getElementById("auc-result").style.display = "block";
                     var winner = product[6];
-                    document.getElementById("auc-winner-name").innerHTML = winner.nome + " " + winner.cognome;;
+                    console.log("Winner: " + winner);
+                    document.getElementById("auc-winner-name").innerHTML = winner.nome + " " + winner.cognome;
 
                     document.getElementById("auc-final-price").innerHTML = auction.prezzo_start;
                     document.getElementById("auc-winner-address").innerHTML = winner.indirizzo;

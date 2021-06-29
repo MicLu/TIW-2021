@@ -183,7 +183,10 @@
                                 </tr>
                             </table>
                             <div id="owner-zone">
-                                <div class="big-link-btn" th:if="${auction.auctionStatus.name() == 'SCADUTA' and auctionOwner.username == session.user.username}">
+                                <form id="close-auction-form">
+                                    <input type="hidden" name="auctionId" id="close-auction-id">
+                                </form>
+                                <div class="big-link-btn">
                                     <a href="#" id="close-auc-btn">
                                         Chiudi asta
                                     </a>
@@ -193,10 +196,10 @@
                             <!-- TODO: sistema anche queste cose -->
                             <table id="auc-result">
                                 <!-- Se non c'è un vincitore mostra "nessuna offerta ricevuta" -->
-                                <div id = "no-winner">
-                                    
+                                <div id="no-winner">
+
                                 </div>
-                                <div>
+                                <div id="winner">
                                     <th>Asta vinta da:</th>
                                     <tr>
                                         <td>
@@ -213,6 +216,13 @@
                             </table>
                         </div>
 
+                    </div>
+                </div>
+
+                <div id="sidebar-right-dettaglio">
+                    <div>Offerte</div>
+                    <hr class="divider">
+                    <div class="box-offerte" id="box-offerte">
                     </div>
                 </div>
             </div>
