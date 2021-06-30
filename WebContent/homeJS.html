@@ -166,14 +166,14 @@
                                     <td></td>
                                     <form id="makeoffer">
                                         <td>
-                                            <input name="valore">
+                                            <input name="valore" id="asta-offer-valore">
 
                                             <p>Minimo: <span id="min-offer">0,00</span>&euro;</p>
 
-                                            <input name="asta" style="display:none;" th:value="${auctionId}">
-                                            <input name="min" style="display:none;" th:value="${auction.rialzo_min}">
-                                            <input name="offerente" style="display:none;" th:value="${logged_username}">
-                                            <input name="corrente" style="display:none;" th:value="${auction.prezzo_start}">
+                                            <input name="asta" style="display:none;" id="asta-offer-asta">
+                                            <input name="min" style="display:none;" id="asta-offer-min">
+                                            <input name="offerente" style="display:none;" id="asta-offer-offerente">
+                                            <input name="corrente" style="display:none;" id="asta-offer-corrente">
                                         </td>
 
                                     </form>

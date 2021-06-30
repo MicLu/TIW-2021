@@ -77,6 +77,8 @@ public class CloseAuctionJS extends HttpServlet {
 		
 		//TODO: in js non serve fare redirect? 
 		//response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId=" + auctionId);
+		
+		response.getWriter().write("1");
 
 	}
 

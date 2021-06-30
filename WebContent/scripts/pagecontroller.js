@@ -6,6 +6,9 @@
 
 
     window.addEventListener("load", () => {
+        //TODO: contrllo dei cookie
+
+
         if (sessionStorage.getItem("username") == null) {
             window.location.href = "indexJS.html";
         } else {
@@ -49,13 +52,13 @@
                                 mieAsteAperte.show();
                                 break;
                             case 400: // bad request
-                                document.getElementById("errorMsg").textContent = message;
+                                document.getElementById("id_alert").textContent = message;
                                 break;
                             case 401: // unauthorized
-                                document.getElementById("errorMsg").textContent = message;
+                                document.getElementById("id_alert").textContent = message;
                                 break;
                             case 500: // server error
-                                document.getElementById("errorMsg").textContent = message;
+                                document.getElementById("id_alert").textContent = message;
                                 break;
                         }
                     } else {
@@ -91,6 +94,8 @@
             }
         );
     });
+
+
 
     function WelcomeMessage(username, messageContainer) {
         this.username = username;
@@ -368,8 +373,10 @@
                                 
                                 self.update(listaAste);*/
                                 pageOrchestrator.reset();
-                                mieAsteAperte.show();
-                                mieAsteChiuse.show();
+                                dettaglioAsta.show(auction.idAsta);
+                            }
+                            if (req.status = 400) {
+                                console.log("Errore 400");
                             }
                         } else {
                             alertContainer.textContent = message;
@@ -386,6 +393,45 @@
 
             document.getElementById("prod-img").innerHTML = "";
             document.getElementById("prod-img").append(img);
+
+            var btn_offer = document.getElementById("offer-btn");
+            btn_offer.addEventListener("click", () => {
+
+                var form = document.getElementById("makeoffer");
+
+                makeCall("POST", "MakeOfferJS", form,
+                    function(req) {
+
+                        if (req.readyState == XMLHttpRequest.DONE) {
+                            var message = req.responseText;
+                            switch (req.status) {
+                                case 200:
+                                    pageOrchestrator.reset();
+                                    dettaglioAsta.show(auction.idAsta);
+                                    break;
+                                case 400: // bad request
+                                    document.getElementById("id_alert").textContent = message;
+                                    break;
+                                case 401: // unauthorized
+                                    document.getElementById("id_alert").textContent = message;
+                                    break;
+                                case 500: // server error
+                                    document.getElementById("id_alert").textContent = message;
+                                    break;
+                            }
+                        } else {
+                            form.reportValidity();
+                        }
+
+                    }
+                );
+
+            });
+
+            document.getElementById("asta-offer-asta").value = auction.idAsta;
+            document.getElementById("asta-offer-min").value = auction.rialzo_min;
+            document.getElementById("asta-offer-offerente").value = sessionStorage.getItem("username");
+            document.getElementById("asta-offer-corrente").value = auction.prezzo_start
 
             //Box offerte
             var offerBox = document.getElementById("box-offerte");

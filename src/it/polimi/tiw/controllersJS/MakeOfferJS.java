@@ -72,7 +72,6 @@ public class MakeOfferJS extends HttpServlet
 			corrente = Float.parseFloat(request.getParameterValues("corrente")[0]);
 			offerente = request.getParameterValues("offerente")[0];
 			
-			
 			if (valore == 0 || asta == 0 || timestamp == 0 || offerente == null)
 			{
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
