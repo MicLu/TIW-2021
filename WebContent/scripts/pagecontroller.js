@@ -214,6 +214,10 @@
                 var row = createTableRow(element);
                 this.listContainerBody.append(row);
 
+                if (element.auctionStatus == "SCADUTA") {
+                    row.lastChild.lastChild.lastChild.lastChild.classList.add("errorMessage");
+                }
+
                 var id = "auction_titolo" + element.idAsta;
                 var link_dettalio_asta = document.getElementById(id);
 
