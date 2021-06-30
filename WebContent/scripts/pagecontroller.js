@@ -13,8 +13,44 @@
             window.location.href = "indexJS.html";
         } else {
             //inizializza i componenti
+            var user = getCookie("username");
+
             pageOrchestrator.start();
             pageOrchestrator.reset();
+
+            if (user != sessionStorage.getItem("username") || user == "")
+            {
+                // Non siamo noi o non siamo collegati
+                console.log("Prima volta");
+                // Salvo il mio utente nei cookie
+                setCookie("username", sessionStorage.getItem("username"), 30);
+                
+                asteDisponibili.show();
+            }
+            else 
+            {
+
+                var action = getCookie("action");
+                console.log("action: " + action);
+                if (action == "")
+                {
+                    pageOrchestrator.reset();
+                    asteDisponibili.show();
+                } else if (action == 0)
+                {
+                    // Apro la lista di aste visitate
+                    console.log("Moastro le aste disponibili");
+                    pageOrchestrator.reset();
+                    asteDisponibili.show(getCookie("aucList"));
+                } else if (action == 1)
+                {
+                    console.log("mostro le mie aste");
+                    // Apro le mie aste
+                    document.getElementById("my-auc-btn").click();
+                    asteDisponibili.reset();
+                }
+            }
+
         }
     }, false);
 
@@ -49,6 +85,7 @@
                         switch (req.status) {
                             case 200:
                                 pageOrchestrator.reset();
+                                setCookie("action",1,30);
                                 mieAsteAperte.show();
                                 break;
                             case 400: // bad request
@@ -118,9 +155,12 @@
             this.listContainer.style.display = "none";
         }
 
-        this.show = function() {
+        this.show = function(listId = null) {
             var self = this;
-            makeCall("GET", "GetAvailableAuctionJS", null,
+
+            
+
+            makeCall("GET", "GetAvailableAuctionJS?list="+listId, null,
                 function(req) {
                     if (req.readyState == XMLHttpRequest.DONE) {
                         var message = req.responseText;
@@ -345,6 +385,10 @@
             var offerList = product[2];
             var min_offer = product[5];
 
+            // Aggiungo alla lista cookie
+            setCookie("action", 0, 30);
+            addVisitedAuctionList(auction.idAsta);
+
             console.log("ASTA " + auction);
 
             document.getElementById("prod-name").innerHTML = auction.article.nome;
@@ -522,7 +566,7 @@
                 document.getElementById("av-auc-list-container"),
                 document.getElementById("av-auc-list-body")
             );
-            asteDisponibili.show();
+            //asteDisponibili.show();
 
             mieAsteAperte = new MieAsteAperte(
                 alertContainer,
