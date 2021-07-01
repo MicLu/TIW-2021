@@ -56,7 +56,48 @@ public class GetAvailableAuctionJS extends HttpServlet {
 		
 		//Get the list of avaiable auction for the logged user
 		try {
-			auctions = auctionDAO.getAvaibleAuction(user.getUsername()); 
+			Debugger.log("Lista aste ricevuta da JS: " + request.getParameter("list"));
+			 
+		 	String[] visitedAuctionString = request.getParameter("list").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+			 
+		 	if (visitedAuctionString[0].equals("null")){
+	            //come prima lista di tutte le aste
+		 		Debugger.log("No cookie -> Lista normale di tutte le aste");
+	            auctions = auctionDAO.getAvaibleAuction(user.getUsername());
+
+	        }else if (visitedAuctionString[0].equals("")){
+	            //lista vuota
+	        	Debugger.log("Cookie, ma nessua asta vista -> Lista vuota");
+	        	//Non hai visualizzato nessuna asta
+
+	        }else {
+	            //lista aste visitate
+	        	Debugger.log("Cookie, aste vistate -> Lista aste");
+	        	List<Integer> visitedAuctionList = new ArrayList<Integer>();
+			    for (int i = 0; i < visitedAuctionString.length ; i++) {
+			    	visitedAuctionList.add(Integer.parseInt(visitedAuctionString[i]));
+			    }
+			    
+			    //List<Auction> visitedAuctionToShow = new ArrayList<Auction>();
+			    //visitedAuctionToShow = auctionDAO.getAvaibleAuction(user.getUsername());
+			    
+			    //visitedAuctionToShow.removeIf( n->visitedAuctionList.contains(n.getIdAsta()) );
+			    
+			    List<Auction> visitedAuctionToShow = new ArrayList<Auction>();
+
+			    visitedAuctionList.forEach(e -> {
+					try {
+						visitedAuctionToShow.add(auctionDAO.getAuctionById(e));
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				});
+			    
+			    auctions = visitedAuctionToShow;
+
+	        }
+
+			
 		} catch (SQLException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			response.getWriter().println("Not possible to get auctions");

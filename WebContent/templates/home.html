@@ -68,7 +68,7 @@
                             <img class="auction-img" th:src="@{/GetImage(image=${auction.image})}">
                         </td>
                         <td>
-                            <div class="auc-title"><a class="detail-link" th:href="@{/GetArticleDetails(auctionId=${auction.idAsta})}"><span th:text="${auction.name}"></span></a></div>
+                            <div class="auc-title"><a class="detail-link" th:href="@{/GetArticleDetails(auctionId=${auction.idAsta})}"><span th:text="${auction.name}"></span> [<span th:text="${auction.article.idArticolo}"></span>]</a></div>
                             <div class="auc-owner"></div>
                             <div class="pricebox">
                                 <div class="auc-price">Offerta corrente: <span th:text="${auction.prezzo_start}">0,00</span>&euro;</div>

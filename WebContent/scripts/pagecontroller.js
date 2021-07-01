@@ -1,7 +1,7 @@
 (function() {
 
     //Componenti pagina
-    var asteDisponibili, mieAsteAperte, mieAsteChiuse, dettaglioAsta, nuovaAsta, alertContainer,
+    var asteDisponibili, asteVisualizzate, mieAsteAperte, mieAsteChiuse, dettaglioAsta, nuovaAsta, alertContainer,
         pageOrchestrator = new PageOrchestrator();
 
 
@@ -18,32 +18,30 @@
             pageOrchestrator.start();
             pageOrchestrator.reset();
 
-            if (user != sessionStorage.getItem("username") || user == "")
-            {
+            if (user != sessionStorage.getItem("username") || user == "") {
                 // Non siamo noi o non siamo collegati
                 console.log("Prima volta");
                 // Salvo il mio utente nei cookie
                 setCookie("username", sessionStorage.getItem("username"), 30);
-                
+
                 asteDisponibili.show();
-            }
-            else 
-            {
+            } else {
 
                 var action = getCookie("action");
                 console.log("action: " + action);
-                if (action == "")
-                {
+
+                if (action == "") {
                     pageOrchestrator.reset();
                     asteDisponibili.show();
-                } else if (action == 0)
-                {
+
+                } else if (action == 0) {
                     // Apro la lista di aste visitate
                     console.log("Moastro le aste disponibili");
                     pageOrchestrator.reset();
-                    asteDisponibili.show(getCookie("aucList"));
-                } else if (action == 1)
-                {
+                    asteVisualizzate.show(getCookie("aucList"));
+                    asteDisponibili.show();
+
+                } else if (action == 1) {
                     console.log("mostro le mie aste");
                     // Apro le mie aste
                     document.getElementById("my-auc-btn").click();
@@ -85,7 +83,7 @@
                         switch (req.status) {
                             case 200:
                                 pageOrchestrator.reset();
-                                setCookie("action",1,30);
+                                setCookie("action", 1, 30);
                                 mieAsteAperte.show();
                                 break;
                             case 400: // bad request
@@ -158,9 +156,7 @@
         this.show = function(listId = null) {
             var self = this;
 
-            
-
-            makeCall("GET", "GetAvailableAuctionJS?list="+listId, null,
+            makeCall("GET", "GetAvailableAuctionJS?list=" + encodeURIComponent(listId), null,
                 function(req) {
                     if (req.readyState == XMLHttpRequest.DONE) {
                         var message = req.responseText;
@@ -568,6 +564,12 @@
             );
             //asteDisponibili.show();
 
+            asteVisualizzate = new AsteDisponibili(
+                alertContainer,
+                document.getElementById("visited-auc-list-container"),
+                document.getElementById("visited-auc-list-body")
+            );
+
             mieAsteAperte = new MieAsteAperte(
                 alertContainer,
                 document.getElementById("mie-aste"),
@@ -602,6 +604,7 @@
             alertContainer.textContent = "";
 
             asteDisponibili.reset();
+            asteVisualizzate.reset();
             mieAsteAperte.reset();
             mieAsteChiuse.reset();
             dettaglioAsta.reset();

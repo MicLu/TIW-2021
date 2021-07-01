@@ -54,7 +54,7 @@ function createTableRow(rowData) {
     auc_owner.classList.add("auc-owner");*/
 
     // Title
-    auc_title.innerHTML = "<span class='detail-link'><span class ='auction-name' id='auction_titolo" + rowData.idAsta + "'>" + rowData.article.nome + "</span></span >";
+    auc_title.innerHTML = "<span class='detail-link'><span class ='auction-name' id='auction_titolo" + rowData.idAsta + "'>" + rowData.article.nome + " [" + rowData.article.idArticolo + "]" + "</span></span >";
     auc_title.classList.add("auc-title");
 
     var second_td = document.createElement("td");
@@ -117,58 +117,53 @@ function createOfferRow(offer) {
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = "expires="+d.toUTCString();
+    let expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-  
-  function getCookie(cname) {
+}
+
+function getCookie(cname) {
     let name = cname + "=";
     let ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
     }
     return "";
-  }
-  
-  function checkCookie() {
+}
+
+function checkCookie() {
     let user = getCookie("username");
     if (user != "") {
-      alert("Welcome again " + user);
+        alert("Welcome again " + user);
     } else {
-      user = prompt("Please enter your name:", "");
-      if (user != "" && user != null) {
-        setCookie("username", user, 365);
-      }
+        user = prompt("Please enter your name:", "");
+        if (user != "" && user != null) {
+            setCookie("username", user, 365);
+        }
     }
-  }
+}
 
-  function addVisitedAuctionList(id)
-  {
-      var cookieList = getCookie("aucList");
+function addVisitedAuctionList(id) {
+    var cookieList = getCookie("aucList");
 
-      if (cookieList == "")
-      {
-          var list = [];
-          list.push(id);
-          list = JSON.stringify(list);
-      }
-      else 
-      {
-          var list = JSON.parse(cookieList);
-          if (!list.includes(id))
-          {
-              list.push(id);
-          }
-          list = JSON.stringify(list);
-      }
+    if (cookieList == "") {
+        var list = [];
+        list.push(id);
+        list = JSON.stringify(list);
+    } else {
+        var list = JSON.parse(cookieList);
+        if (!list.includes(id)) {
+            list.push(id);
+        }
+        list = JSON.stringify(list);
+    }
 
-      setCookie("aucList", list, 30);
+    setCookie("aucList", list, 30);
 
 
-  }
+}
