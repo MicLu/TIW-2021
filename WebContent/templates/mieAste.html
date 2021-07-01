@@ -59,19 +59,19 @@
 
                         </td>
                         <td>
-                            <div class="auc-title"><a class="detail-link" th:href="@{/GetArticleDetails(auctionId=${auction.idAsta})}"><span th:text="${auction.name}"></span> [<span th:text="${auction.article.idArticolo}"></span>]</a></div>
+                            <div class="auc-title"><a class="detail-link" th:href="@{/GetArticleDetails(auctionId=${auction.idAsta},error=0)}"><span th:text="${auction.name}"></span> [<span th:text="${auction.article.idArticolo}"></span>]</a></div>
                             <div class="auc-owner"></div>
                             <div class="pricebox">
                                 <div class="auc-price">Offerta corrente: <span th:text="${auction.prezzo_start}">0,00</span>&euro;</div>
                                 <div class="auc-timer">Scadenza:
                                     <span th:if="${auction.auctionStatus.name() == 'SCADUTA'}" class="errorMessage">
-                                        <span th:text="${auction.scadenza}">
+                                        <span th:text="${auction.timeleft}">
                                             1d 2h rimanenti
                                         </span>
-                                    <br>Asta scaduta
+                                    <br>
                                     </span>
                                     <span th:if="${auction.auctionStatus.name() != 'SCADUTA'}">
-                                        <span th:text="${auction.scadenza}">
+                                        <span th:text="${auction.timeleft}">
                                             1d 2h rimanenti
                                         </span>
                                     </span>
@@ -98,11 +98,11 @@
 
                         </td>
                         <td>
-                            <div class="auc-title"><a class="detail-link" th:href="@{/GetArticleDetails(auctionId=${auction.idAsta})}"><span th:text="${auction.name}"></span> [<span th:text="${auction.article.idArticolo}"></span>]</a></div>
+                            <div class="auc-title"><a class="detail-link" th:href="@{/GetArticleDetails(auctionId=${auction.idAsta},error=0)}"><span th:text="${auction.name}"></span> [<span th:text="${auction.article.idArticolo}"></span>]</a></div>
                             <div class="auc-owner"></div>
                             <div class="pricebox">
                                 <div class="auc-price">Offerta corrente: <span th:text="${auction.prezzo_start}">0,00</span>&euro;</div>
-                                <div class="auc-timer">Scadenza: <span th:text="${auction.scadenza}">1d 2h rimanenti</span></div>
+                                <div class="auc-timer">Scadenza: <span th:text="${auction.timeleft}">1d 2h rimanenti</span></div>
                             </div>
                         </td>
                     </tr>

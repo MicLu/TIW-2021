@@ -188,16 +188,22 @@
                 this.listContainerBody.append(row);
 
                 var id = "auction_titolo" + element.idAsta;
-                var link_dettalio_asta = document.getElementById(id);
+                //var link_dettalio_asta = document.getElementById(id);
 
-                link_dettalio_asta.addEventListener('mouseover', (e) => {
-                    e.target.style.cursor = "pointer";
-                });
+                var link_dettalio_asta = document.getElementsByClassName(id);
 
-                link_dettalio_asta.addEventListener("click", () => {
-                    pageOrchestrator.reset();
-                    dettaglioAsta.show(element.idAsta);
-                });
+                for (let i = 0; i < link_dettalio_asta.length; i++) {
+
+                    link_dettalio_asta[i].addEventListener('mouseover', (e) => {
+                        e.target.style.cursor = "pointer";
+                    });
+
+                    link_dettalio_asta[i].addEventListener("click", () => {
+                        pageOrchestrator.reset();
+                        dettaglioAsta.show(element.idAsta);
+                    });
+                }
+
 
             });
 
@@ -383,7 +389,9 @@
 
             // Aggiungo alla lista cookie
             setCookie("action", 0, 30);
-            addVisitedAuctionList(auction.idAsta);
+            if (sessionStorage.getItem("username") != auction.proprietario) {
+                addVisitedAuctionList(auction.idAsta);
+            }
 
             console.log("ASTA " + auction);
 
@@ -566,7 +574,7 @@
 
             asteVisualizzate = new AsteDisponibili(
                 alertContainer,
-                document.getElementById("visited-auc-list-container"),
+                document.getElementById("aste-visualizzate"),
                 document.getElementById("visited-auc-list-body")
             );
 

@@ -3,6 +3,7 @@ package it.polimi.tiw.controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import it.polimi.tiw.beans.AuctionStatus;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.dao.AuctionDAO;
 import it.polimi.tiw.utils.DatabaseConnection;
+import it.polimi.tiw.utils.Debugger;
 
 /**
  * Servlet implementation class GetMyAuction
@@ -77,6 +79,32 @@ public class GetMyAuction extends HttpServlet {
 			
 			for (Auction auction : auctions)
 			{
+				Debugger.log("scadenza asta: " + auction.getScadenza());
+				
+				Timestamp scadenzaAsta = auction.getScadenza();
+		        Timestamp now = new Timestamp(System.currentTimeMillis());
+
+		        long milliseconds1 = scadenzaAsta.getTime();
+		        long milliseconds2 = now.getTime();
+
+		        long diff = (milliseconds1 - milliseconds2);
+		        long diffSeconds = (long) Math.floor((diff % (1000 * 60)) / 1000);
+		        long diffMinutes = (long) Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+		        long diffHours = (long) Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		        long diffDays = (long) Math.floor(diff / (1000 * 60 * 60 * 24));
+		        
+		        String timeleft = (new StringBuilder())
+						 .append(Long.toString(diffDays)).append("D ")
+						 .append(Long.toString(diffHours)).append("H ")
+						 .append(Long.toString(diffMinutes)).append("m ")
+						 .append(Long.toString(diffSeconds)).append("s").toString();
+		        
+		        if(diff<0) {
+		        	auction.setTimeLeft("Asta scaduta");
+				 }else {
+					 auction.setTimeLeft(timeleft);
+				 }
+		        
 				if (auction.getAuctionStatus() == AuctionStatus.CHIUSA)
 				{
 					auctionsClosed.add(auction);

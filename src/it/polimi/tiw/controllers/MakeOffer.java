@@ -55,8 +55,8 @@ public class MakeOffer extends HttpServlet
 		
 		String offerente = null;
 		int timestamp = 0;
-		float valore = 0;
 		int asta = 0;
+		float valore = 0;
 		float rialzo_min = 0;
 		float corrente = 0;
 
@@ -64,8 +64,8 @@ public class MakeOffer extends HttpServlet
 		try {
 			
 			timestamp = 500;
-			valore = Float.parseFloat(request.getParameterValues("valore")[0]);
 			asta = Integer.parseInt(request.getParameterValues("asta")[0]);
+			valore = Float.parseFloat(request.getParameterValues("valore")[0]);
 			rialzo_min = Float.parseFloat(request.getParameterValues("min")[0]);
 			corrente = Float.parseFloat(request.getParameterValues("corrente")[0]);
 			offerente = request.getParameterValues("offerente")[0];
@@ -73,7 +73,7 @@ public class MakeOffer extends HttpServlet
 			
 			if (valore == 0 || asta == 0 || timestamp == 0 || offerente == null)
 			{
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Campi mancanti");
+				//response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Campi mancanti");
 				response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId="+asta+"&error="+1);
 				Debugger.log("Campi mancanti");
 				return;
@@ -109,7 +109,8 @@ public class MakeOffer extends HttpServlet
 			e.printStackTrace();
 		} 
 		catch (NumberFormatException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Input non valido");
+			//response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Input non valido");
+			response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId="+asta+"&error="+3);
 			Debugger.log("Input non valido");
 			return;
 			

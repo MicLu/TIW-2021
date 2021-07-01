@@ -63,12 +63,18 @@ public class GetArticleDetails extends HttpServlet {
 		
 		//Get auctionId
 		Integer auctionId = null;
+		Integer errorCode = 0;
 		
 		try {
 			auctionId = Integer.parseInt(request.getParameter("auctionId"));
+			if(!request.getParameter("error").isEmpty()) {
+				Debugger.log("erro nel pars");
+				errorCode = Integer.parseInt(request.getParameter("error"));				
+			}
 		} catch (NumberFormatException | NullPointerException e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
 			Debugger.log("parametri sbagliati");
+			e.printStackTrace();
 			return;
 		}
 		
@@ -125,6 +131,22 @@ public class GetArticleDetails extends HttpServlet {
 		ctx.setVariable("logged_username", loggedUser.getUsername());
 		ctx.setVariable("auctionId", auctionId);
 		ctx.setVariable("minim", minim);
+		
+		switch (errorCode) {
+			case 1:
+				ctx.setVariable("error", "Campi mancanti");
+				break;
+			case 2:
+				ctx.setVariable("error", "Offerta minore dell'offerta minima");
+				break;
+			case 3:
+				ctx.setVariable("error", "Input non valido");
+				break;
+			default:
+				ctx.setVariable("error", "");
+				break;
+		}
+		
 		
 		//Send auctionWinner'infos to template engine
 		User auctionWinner = null;

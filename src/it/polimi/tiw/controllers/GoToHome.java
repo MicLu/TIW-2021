@@ -3,7 +3,12 @@ package it.polimi.tiw.controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -14,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.el.lang.ELSupport;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -79,6 +85,36 @@ public class GoToHome extends HttpServlet {
 		if(auctions.isEmpty()) {
 			Debugger.log("Lista aste consultabili vuota");
 		}
+		
+		auctions.forEach(e->{
+			
+			Debugger.log("scadenza asta: " + e.getScadenza());
+			
+			Timestamp scadenzaAsta = e.getScadenza();
+	        Timestamp now = new Timestamp(System.currentTimeMillis());
+
+	        long milliseconds1 = scadenzaAsta.getTime();
+	        long milliseconds2 = now.getTime();
+
+	        long diff = (milliseconds1 - milliseconds2);
+	        long diffSeconds = (long) Math.floor((diff % (1000 * 60)) / 1000);
+	        long diffMinutes = (long) Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+	        long diffHours = (long) Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	        long diffDays = (long) Math.floor(diff / (1000 * 60 * 60 * 24));
+	        
+	        String timeleft = (new StringBuilder())
+					 .append(Long.toString(diffDays)).append("D ")
+					 .append(Long.toString(diffHours)).append("H ")
+					 .append(Long.toString(diffMinutes)).append("m ")
+					 .append(Long.toString(diffSeconds)).append("s").toString();
+	        
+	        if(diff<0) {
+				 e.setTimeLeft("Asta scaduta");
+			 }else {
+				 e.setTimeLeft(timeleft);
+			 }
+					 
+		});
 		
 		ctx.setVariable("AvaiableAuctions", auctions);
 		

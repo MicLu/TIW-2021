@@ -12,6 +12,7 @@ public class Auction {
 	private String proprietario;
 	private AuctionStatus auctionStatus;
 	private Article article;
+	private String timeLeft;
 	
 	public Auction() {
 	}
@@ -91,6 +92,14 @@ public class Auction {
 	
 	public String getDescrizione() {
 		return article.getDescrizione(); 
+	}
+
+	public String getTimeLeft() {
+		return timeLeft;
+	}
+
+	public void setTimeLeft(String timeLeft) {
+		this.timeLeft = timeLeft;
 	}
 	
 	

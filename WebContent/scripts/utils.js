@@ -40,7 +40,7 @@ function createTableRow(rowData) {
     auc_price.classList.add("auc-price");
 
     // Set della scadenza
-    auc_timer.innerHTML = "Scadenza: <span id='auction_scadenza'>" + rowData.scadenza + "</span>";
+    auc_timer.innerHTML = "Scadenza: <span id='auction_scadenza'>" + getTimeDifference(rowData.scadenza) + "</span>";
     auc_timer.classList.add("auc-timer");
 
     // Build pricebox
@@ -54,7 +54,7 @@ function createTableRow(rowData) {
     auc_owner.classList.add("auc-owner");*/
 
     // Title
-    auc_title.innerHTML = "<span class='detail-link'><span class ='auction-name' id='auction_titolo" + rowData.idAsta + "'>" + rowData.article.nome + " [" + rowData.article.idArticolo + "]" + "</span></span >";
+    auc_title.innerHTML = "<span class='detail-link'><span class ='auction-name auction_titolo" + rowData.idAsta + "' id='auction_titolo" + rowData.idAsta + "'>" + rowData.article.nome + " [" + rowData.article.idArticolo + "]" + "</span></span >";
     auc_title.classList.add("auc-title");
 
     var second_td = document.createElement("td");
@@ -165,5 +165,30 @@ function addVisitedAuctionList(id) {
 
     setCookie("aucList", list, 30);
 
+}
+
+function getTimeDifference(date) {
+
+    var time = new Date(date).getTime();
+
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    var distance = time - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="demo"
+
+    if (distance < 0) {
+        return ("Asta scaduta");
+    }
+
+    return (days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
 
 }

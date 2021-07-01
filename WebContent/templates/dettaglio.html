@@ -79,6 +79,7 @@
                                 </form>
                             </tr>
                         </table>
+                        <span th:text="${error}" class="errorMessage"></span>
                         <div class="big-link-btn" th:if="${auction.auctionStatus.name() == 'SCADUTA' and auctionOwner.username == session.user.username}">
                             <a th:href="@{/CloseAuction(auctionId=${auction.idAsta})}">
                                     Chiudi asta
