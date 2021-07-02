@@ -24,7 +24,7 @@ public class OfferDAO {
 		List<Offer> offers = new ArrayList<Offer>();
 		
 		//String query = "SELECT asta.idasta as id, utenti.nome as uNome, utenti.cognome as uCognome, offerta.timestamp as time, offerta.valore as val FROM articolo JOIN asta ON articolo.idarticolo = asta.articolo JOIN offerta ON offerta.asta = asta.idasta JOIN utenti ON offerta.offerente = utenti.username WHERE articolo.idarticolo = ? ORDER BY offerta.valore DESC LIMIT 10";
-		String query = "SELECT offerta.valore as val, asta.idasta as id, utenti.nome as unome, utenti.cognome as ucognome, utenti.username as username from offerta join asta on offerta.asta = asta.idasta join utenti on utenti.username = offerta.offerente where asta.idasta = ? order by offerta.valore desc limit 10";
+		String query = "SELECT offerta.valore as val, asta.idasta as id, utenti.nome as unome, utenti.cognome as ucognome, utenti.username as username, timestamp from offerta join asta on offerta.asta = asta.idasta join utenti on utenti.username = offerta.offerente where asta.idasta = ? order by offerta.valore desc limit 10";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);)
 		{
 			pstatement.setString(1, Integer.toString(item));
@@ -49,6 +49,7 @@ public class OfferDAO {
 				offer.setOfferente(result.getString("username"));
 				offer.setValore(result.getFloat("val"));
 				offer.setAsta(Integer.parseInt(result.getString("id")));
+				offer.setTimestamp(result.getTimestamp("timestamp"));
 				
 				offers.add(offer);
 			}

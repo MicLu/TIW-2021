@@ -117,7 +117,7 @@
             <hr class="divider">
             <div class="box-offerte" th:remove="all-but-first" th:each="offer : ${offers}">
                 <div class="offerta">
-                    <div><span th:text="${offer.offerenteCompleto}">Mattia Malacarne</span></div>
+                    <div>[<span th:text="${offer.timestamp}"></span>] <span th:text="${offer.offerenteCompleto}">Mattia Malacarne</span></div>
                     <div style="text-align: end;"><span th:text="${offer.valore}">0,00</span>&euro;</div>
                 </div>
                 <div class="offerta">

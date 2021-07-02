@@ -26,10 +26,13 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.tiw.dao.AuctionDAO;
+import it.polimi.tiw.dao.OfferDAO;
+import it.polimi.tiw.dao.UserDAO;
 import it.polimi.tiw.utils.DatabaseConnection;
 import it.polimi.tiw.utils.Debugger;
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.beans.Auction;
+import it.polimi.tiw.beans.Offer;
 
 /**
  * Servlet implementation class GoToHome
@@ -117,6 +120,49 @@ public class GoToHome extends HttpServlet {
 		});
 		
 		ctx.setVariable("AvaiableAuctions", auctions);
+		
+		
+		//Lista aste vinte
+		List<Auction> winnedAuctions = new ArrayList<Auction>();
+		List<Auction> closedAuctions = new ArrayList<Auction>();
+		
+		try {
+			closedAuctions = auctionDAO.getClosedAuction();
+		} catch (SQLException e1) {
+			Debugger.log("Non trovo aste chiuse");
+			e1.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get auctions");
+			return;
+		}
+		
+		closedAuctions.forEach(e->{
+			List<Offer> offer = new ArrayList<Offer>();
+			OfferDAO offerDAO = new OfferDAO(connection);
+			try {
+				offer = offerDAO.getOfferForItem(e.getIdAsta());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			if(offer.size()>0) {
+				try {
+					UserDAO userDAO = new UserDAO(connection);
+					//First element is the last offer
+					Offer lastOffer = offer.get(0);
+					User auctionWinner = userDAO.getUserByUsername(lastOffer.getOfferente());
+					//sono il vincitoer
+					if( (auctionWinner.getUsername()).equals(user.getUsername()) ) {
+						winnedAuctions.add(e);
+					}
+				}
+				catch (SQLException e2) {
+					Debugger.log("Errore nella ricerca del vincitore dell'asta");
+					e2.printStackTrace();
+				}
+				
+			}
+		});
+		
+		ctx.setVariable("winnedAuction", winnedAuctions);
 		
 		
 		templateEngine.process(path, ctx, response.getWriter());

@@ -132,8 +132,19 @@ public class AuctionDAO {
 	}
 	
 	
-	public List<Auction> getClosedAuction(){
-		return null;
+	public List<Auction> getClosedAuction() throws SQLException{
+
+		List<Auction> auctionList = new ArrayList<Auction>();
+		
+		//FIXME: controllare ordinamento aste ascs/desc
+		String query = "SELECT * FROM asta join articolo on articolo = idarticolo WHERE (stato = 'CHIUSA') ORDER BY scadenza ASC";
+		
+		try (PreparedStatement stm = connection.prepareStatement(query))
+		{
+			auctionList = getAuctionList(stm);
+		}
+		
+		return auctionList;
 		
 	}
 	

@@ -96,7 +96,7 @@ public class MakeOffer extends HttpServlet
 			
 			if (offerOk) {
 				auctionDAO.updateAuctionPrezzoStart(valore, asta);
-				response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId="+asta);
+				response.sendRedirect(getServletContext().getContextPath() + "/GetArticleDetails?auctionId="+asta+"&error=0");
 			} else 
 			{
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Spiacente l'asta è scaduta, o hai provato a offrire alla tua asta");
