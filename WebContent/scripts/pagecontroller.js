@@ -1,7 +1,7 @@
 (function() {
 
     //Componenti pagina
-    var asteDisponibili, asteVisualizzate, mieAsteAperte, mieAsteChiuse, dettaglioAsta, nuovaAsta, alertContainer,
+    var asteDisponibili, asteVinte, asteVisualizzate, mieAsteAperte, mieAsteChiuse, dettaglioAsta, nuovaAsta, alertContainer,
         pageOrchestrator = new PageOrchestrator();
 
 
@@ -25,6 +25,7 @@
                 setCookie("username", sessionStorage.getItem("username"), 30);
 
                 asteDisponibili.show();
+                asteVinte.show();
             } else {
 
                 var action = getCookie("action");
@@ -33,6 +34,7 @@
                 if (action == "") {
                     pageOrchestrator.reset();
                     asteDisponibili.show();
+                    asteVinte.show();
 
                 } else if (action == 0) {
                     // Apro la lista di aste visitate
@@ -40,12 +42,14 @@
                     pageOrchestrator.reset();
                     asteVisualizzate.show(getCookie("aucList"));
                     asteDisponibili.show();
+                    asteVinte.show();
 
                 } else if (action == 1) {
                     console.log("mostro le mie aste");
                     // Apro le mie aste
                     document.getElementById("my-auc-btn").click();
                     asteDisponibili.reset();
+                    asteVinte.reset();
                 }
             }
 
@@ -157,6 +161,80 @@
             var self = this;
 
             makeCall("GET", "GetAvailableAuctionJS?list=" + encodeURIComponent(listId), null,
+                function(req) {
+                    if (req.readyState == XMLHttpRequest.DONE) {
+                        var message = req.responseText;
+                        if (req.status == 200) {
+                            var listaAste = JSON.parse(req.responseText);
+                            console.log(listaAste);
+                            if (listaAste.length == 0) {
+                                console.log("Lista vuota");
+                                self.alertContainer.textContent = "Nessuna asta disponibile";
+                                return;
+                            }
+                            self.update(listaAste);
+                        }
+                    } else {
+                        self.alertContainer.textContent = message;
+                    }
+                }
+            );
+        };
+
+        this.update = function(listaAste) {
+
+            console.log(listaAste);
+
+            listContainerBody.innerHTML = "";
+            listaAste.forEach(element => {
+
+                var row = createTableRow(element);
+                this.listContainerBody.append(row);
+
+                var id = "auction_titolo" + element.idAsta;
+                //var link_dettalio_asta = document.getElementById(id);
+
+                var link_dettalio_asta = document.getElementsByClassName(id);
+
+                for (let i = 0; i < link_dettalio_asta.length; i++) {
+
+                    link_dettalio_asta[i].addEventListener('mouseover', (e) => {
+                        e.target.style.cursor = "pointer";
+                    });
+
+                    link_dettalio_asta[i].addEventListener("click", () => {
+                        pageOrchestrator.reset();
+                        dettaglioAsta.show(element.idAsta);
+                    });
+                }
+
+
+            });
+
+            document.getElementById("page-title").innerHTML = "<h1>Aste disponibili</h1>";
+            //rendo visibile la tabella alla fine della creazione
+            this.listContainer.style.display = "block";
+        }
+
+    }
+
+    function AsteVinte(alertContainer, listContainer, listContainerBody) {
+
+        console.log("ASTEVINTE OK");
+
+        this.alertContainer = alertContainer;
+        this.listContainer = listContainer;
+        this.listContainerBody = listContainerBody;
+
+        this.reset = function() {
+            //Nascondo l'intera tabella
+            this.listContainer.style.display = "none";
+        }
+
+        this.show = function(listId = null) {
+            var self = this;
+
+            makeCall("GET", "GetAvailableAuctionJS?list=win", null,
                 function(req) {
                     if (req.readyState == XMLHttpRequest.DONE) {
                         var message = req.responseText;
@@ -572,6 +650,12 @@
             );
             //asteDisponibili.show();
 
+            asteVinte = new AsteVinte(
+                alertContainer,
+                document.getElementById("aste-vinte"),
+                document.getElementById("winned-auc-list-body")
+            );
+
             asteVisualizzate = new AsteDisponibili(
                 alertContainer,
                 document.getElementById("aste-visualizzate"),
@@ -617,6 +701,7 @@
             mieAsteChiuse.reset();
             dettaglioAsta.reset();
             nuovaAsta.reset();
+            asteVinte.reset();
 
         }
 
