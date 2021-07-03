@@ -102,7 +102,7 @@ function createOfferRow(offer) {
     row.classList.add("offerta")
 
     var div1 = document.createElement("div");
-    div1.innerHTML = offer.offerenteCompleto; //nome offerente
+    div1.innerHTML = "[" + offer.timestamp + "] " + offer.offerenteCompleto; //nome offerente
 
     var div2 = document.createElement("div");
     div2.style = "text-align: end;";
