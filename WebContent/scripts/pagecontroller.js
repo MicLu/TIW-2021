@@ -56,6 +56,16 @@
         }
     }, false);
 
+    var logo = document.getElementById("site-logo");
+    logo.addEventListener('mouseover', (e) => {
+        e.target.style.cursor = "pointer";
+    });
+    logo.addEventListener("click", () => {
+        pageOrchestrator.reset();
+        asteDisponibili.show();
+        document.getElementById("page-title").innerHTML = "<h1>Aste disponibili</h1>";
+    });
+
     var btn_vendo = document.getElementById("btn-vendo");
     btn_vendo.addEventListener('mouseover', (e) => {
         e.target.style.cursor = "pointer";

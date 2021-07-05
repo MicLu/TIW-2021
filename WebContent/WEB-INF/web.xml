@@ -4,7 +4,7 @@
   <display-name>TIW-2021</display-name>
   <context-param>
     <param-name>dbUrl</param-name>
-    <param-value>jdbc:mysql://portalebelgiardino.tk:3306/astetiw?serverTimezone=UTC</param-value>
+    <param-value>jdbc:mysql://192.168.1.206:3306/astetiw?serverTimezone=UTC</param-value>
   </context-param>
   <context-param>
     <param-name>dbUser</param-name>
@@ -12,7 +12,7 @@
   </context-param>
   <context-param>
     <param-name>dbPassword</param-name>
-    <param-value>f746e17c26dceaf750c471788c854bc0</param-value>
+    <param-value>micheledb</param-value>
   </context-param>
   <context-param>
     <param-name>dbDriver</param-name>
