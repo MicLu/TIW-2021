@@ -18,11 +18,12 @@
 Project created using:
 <!-- back/front divided - better to put all together? -->
 * Back end
+    * Tomcat (web server)
     * Java servlet
-    * MySql
+    * MySQL
 * Front end    
     * HTML5
-    * Thymeleaf template engine
+    * Thymeleaf (template engine)
     * CSS
     * Javascript
 
