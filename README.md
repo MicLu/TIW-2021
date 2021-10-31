@@ -33,7 +33,7 @@ The specification of the project requires two different implementation:
 
 ### HTML pure version
 This version must be done without the use of JavaScript.
-The pages were built dynamically, with the information from the database, using the template engine **Thymeleaf** 
+Pages were built dynamically, with data from the database, using the template engine **Thymeleaf** 
 
 ### JavaScript version
 After the login page, each user interaction is managed without the complete reloading of the page, but with an a
